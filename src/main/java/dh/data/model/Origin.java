@@ -71,4 +71,17 @@ public class Origin {
     public void setDate(Date date) {
         this.date = date;
     }
+
+    @Override
+    public String toString() {
+        return "Origin{" +
+                "id=" + id +
+                ", time=" + time +
+                ", wxd=" + wxd +
+                ", qnh=" + qnh +
+                ", height=" + height +
+                ", flightId=" + flightId +
+                ", date=" + date +
+                '}';
+    }
 }

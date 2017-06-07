@@ -1,36 +1,34 @@
 package dh.data.dao;
 
+import com.csvreader.CsvReader;
 import dh.data.model.Origin;
-import org.apache.poi.hssf.usermodel.HSSFRow;
-import org.apache.poi.hssf.usermodel.HSSFSheet;
-import org.apache.poi.hssf.usermodel.HSSFWorkbook;
-import org.apache.poi.poifs.filesystem.POIFSFileSystem;
+import dh.data.util.PathUtil;
+import dh.data.util.TimeUtil;
 
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.InputStream;
+import java.io.*;
+import java.nio.charset.Charset;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
  * Created by MT-T450 on 2017/6/7.
  */
 public class OriginDao {
-    private final static String file = "/src/加工过源数据完整.csv";
+    private final static String file = "src/加工过源数据完整.csv";
     private final static String fileName = "加工过源数据完整";
 
-    private POIFSFileSystem fs;
-    private HSSFWorkbook wb;
-    private HSSFSheet sheet;
-    private HSSFRow row;
+    private static CsvReader csvReader = null;
 
     static {
         // 对读取Excel表格标题测试
         try {
-            InputStream is = new FileInputStream(OriginDao.class.getClassLoader().getResource("/").getPath()+file);
+            InputStream is = new FileInputStream(PathUtil.getClassPath() + file);
+//            BufferedReader reader = new BufferedReader(new FileReader(PathUtil.getClassPath() + file));
+            csvReader = new CsvReader(is,',', Charset.forName("GB2312"));
         } catch (Exception e) {
             e.printStackTrace();
         }
-
     }
 
     public static boolean save(Origin origin) {
@@ -41,9 +39,16 @@ public class OriginDao {
         return true;
     }
 
-    public static List<Origin> getAll() {
-        List<Origin> list = null;
-
+    public static List<Origin> getAll() throws IOException {
+        List<Origin> list = new ArrayList<>();
+        csvReader.readHeaders(); //逃过表头
+        while(csvReader.readRecord()) {
+            Origin origin = copy(csvReader);
+//            if (origin.getId() == null || origin.getId().equals("")) {
+//                break;
+//            }
+            list.add(origin);
+        }
         return list;
     }
 
@@ -52,8 +57,37 @@ public class OriginDao {
         return list;
     }
 
-    public static Origin get(int index) {
+    /**
+     * @param index > 0
+     * @return
+     */
+    public static Origin get(int index) throws IOException {
         Origin origin = new Origin();
+        csvReader.readHeaders(); //逃过表头
+        int i = 0;
+        while(csvReader.readRecord()) {
+            if (i == index) {
+                origin = copy(csvReader);
+                break;
+            }
+            i++;
+        }
+        return origin;
+    }
+
+    private static Origin copy(CsvReader reader) {
+        Origin origin = new Origin();
+        try {
+            origin.setId(Integer.parseInt(reader.get(0)));
+            origin.setTime(TimeUtil.parseDate(reader.get(1), "HH:mm:ss"));
+            origin.setWxd((int) (Float.parseFloat(reader.get(2)) * 10));
+            origin.setQnh(Integer.parseInt(reader.get(3)));
+            origin.setHeight(Integer.parseInt(reader.get(4)));
+            origin.setFlightId(Integer.parseInt(reader.get(5)));
+            origin.setDate(TimeUtil.parseDate(reader.get(6), "yyyyMMdd"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         return origin;
     }
 }
