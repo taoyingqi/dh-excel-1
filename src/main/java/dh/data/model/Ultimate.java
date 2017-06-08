@@ -11,7 +11,7 @@ public class Ultimate {
     private Integer down500n;
     private Date last1Down500Time;
     private Integer down0n;
-    private Date last1Down0Time;
+    private Date first1Down0Time;
     private Date durationTime;
     private Sample wxdMdc; //无线电高度最大下降率
     private Sample qnhMdc; //QNH高度最大下降率
@@ -51,12 +51,12 @@ public class Ultimate {
         this.down0n = down0n;
     }
 
-    public Date getLast1Down0Time() {
-        return last1Down0Time;
+    public Date getFirst1Down0Time() {
+        return first1Down0Time;
     }
 
-    public void setLast1Down0Time(Date last1Down0Time) {
-        this.last1Down0Time = last1Down0Time;
+    public void setFirst1Down0Time(Date first1Down0Time) {
+        this.first1Down0Time = first1Down0Time;
     }
 
     public Date getDurationTime() {
@@ -105,5 +105,22 @@ public class Ultimate {
 
     public void setDownRateGt500Ld(Sample downRateGt500Ld) {
         this.downRateGt500Ld = downRateGt500Ld;
+    }
+
+    @Override
+    public String toString() {
+        return "Ultimate{" +
+                "flightId=" + flightId +
+                ", down500n=" + down500n +
+                ", last1Down500Time=" + last1Down500Time +
+                ", down0n=" + down0n +
+                ", first1Down0Time=" + first1Down0Time +
+                ", durationTime=" + durationTime +
+                ", wxdMdc=" + wxdMdc +
+                ", qnhMdc=" + qnhMdc +
+                ", heightMdc=" + heightMdc +
+                ", downRateGt500n=" + downRateGt500n +
+                ", downRateGt500Ld=" + downRateGt500Ld +
+                '}';
     }
 }

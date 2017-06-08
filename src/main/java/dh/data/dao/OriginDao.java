@@ -18,7 +18,7 @@ import java.util.List;
  */
 public class OriginDao {
     private final static String file = "src/加工过源数据完整.csv";
-    private final static String fileName = "加工过源数据完整";
+    private final static String sheetName = "加工过源数据完整";
 
     private static CsvReader csvReader = null;
 
@@ -45,13 +45,31 @@ public class OriginDao {
         List<Origin> list = new ArrayList<>();
         csvReader.readHeaders(); //逃过表头
         while(csvReader.readRecord()) {
-            Origin origin = copy(csvReader);
+            Origin origin = parse(csvReader);
 //            if (origin.getId() == null || origin.getId().equals("")) {
 //                break;
 //            }
             list.add(origin);
         }
         return list;
+    }
+
+    /**
+     * @param index > 0
+     * @return
+     */
+    public static Origin get(int index) throws IOException {
+        Origin origin = new Origin();
+        csvReader.readHeaders(); //逃过表头
+        int i = 0;
+        while(csvReader.readRecord()) {
+            if (i == index) {
+                origin = parse(csvReader);
+                break;
+            }
+            i++;
+        }
+        return origin;
     }
 
     public static List<Origin> getList(int start, int end) throws IOException {
@@ -69,7 +87,7 @@ public class OriginDao {
                 break;
             }
             if (i >= start) {
-                Origin origin = copy(csvReader);
+                Origin origin = parse(csvReader);
                 list.add(origin);
             }
             i++;
@@ -77,25 +95,7 @@ public class OriginDao {
         return list;
     }
 
-    /**
-     * @param index > 0
-     * @return
-     */
-    public static Origin get(int index) throws IOException {
-        Origin origin = new Origin();
-        csvReader.readHeaders(); //逃过表头
-        int i = 0;
-        while(csvReader.readRecord()) {
-            if (i == index) {
-                origin = copy(csvReader);
-                break;
-            }
-            i++;
-        }
-        return origin;
-    }
-
-    private static Origin copy(CsvReader reader) {
+    private static Origin parse(CsvReader reader) {
         Origin origin = new Origin();
         try {
             origin.setId(Integer.parseInt(reader.get(0)));

@@ -7,25 +7,35 @@ import java.util.Date;
  * 采样
  */
 public class Sample {
-    private Date start;
-    private Date end;
-    private Integer downRate;
-    private Integer durationSec;
+    private Date startTime; //起始时刻
+    private Date endTime; //截止时刻
+    private Integer downRate; //下降率
+    private Integer durationSec; //持续毫秒
 
-    public Date getStart() {
-        return start;
+    public Sample() {
     }
 
-    public void setStart(Date start) {
-        this.start = start;
+    public Sample(Date startTime, Date endTime, Integer downRate, Integer durationSec) {
+        this.startTime = startTime;
+        this.endTime = endTime;
+        this.downRate = downRate;
+        this.durationSec = durationSec;
     }
 
-    public Date getEnd() {
-        return end;
+    public Date getStartTime() {
+        return startTime;
     }
 
-    public void setEnd(Date end) {
-        this.end = end;
+    public void setStartTime(Date startTime) {
+        this.startTime = startTime;
+    }
+
+    public Date getEndTime() {
+        return endTime;
+    }
+
+    public void setEndTime(Date endTime) {
+        this.endTime = endTime;
     }
 
     public Integer getDownRate() {
@@ -42,5 +52,15 @@ public class Sample {
 
     public void setDurationSec(Integer durationSec) {
         this.durationSec = durationSec;
+    }
+
+    @Override
+    public String toString() {
+        return "Sample{" +
+                "startTime=" + startTime +
+                ", endTime=" + endTime +
+                ", downRate=" + downRate +
+                ", durationSec=" + durationSec +
+                '}';
     }
 }
