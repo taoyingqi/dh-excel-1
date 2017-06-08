@@ -1,14 +1,16 @@
 package dh.data.dao;
 
 import com.csvreader.CsvReader;
+import dh.data.config.IConst;
 import dh.data.model.Origin;
 import dh.data.util.PathUtil;
 import dh.data.util.TimeUtil;
 
-import java.io.*;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -52,8 +54,26 @@ public class OriginDao {
         return list;
     }
 
-    public static List<Origin> getList(int start, int end) {
-        List<Origin> list = null;
+    public static List<Origin> getList(int start, int end) throws IOException {
+        if (start < 0) {
+            throw new ArrayIndexOutOfBoundsException(start);
+        }
+        if (start > end) {
+            throw new RuntimeException("start 必须小于 end");
+        }
+        List<Origin> list = new ArrayList<>();
+        csvReader.readHeaders();
+        int i = 0;
+        while(csvReader.readRecord()) {
+            if (i >= end) {
+                break;
+            }
+            if (i >= start) {
+                Origin origin = copy(csvReader);
+                list.add(origin);
+            }
+            i++;
+        }
         return list;
     }
 
@@ -80,7 +100,7 @@ public class OriginDao {
         try {
             origin.setId(Integer.parseInt(reader.get(0)));
             origin.setTime(TimeUtil.parseDate(reader.get(1), "HH:mm:ss"));
-            origin.setWxd((int) (Float.parseFloat(reader.get(2)) * 10));
+            origin.setWxd((int) (Float.parseFloat(reader.get(2)) * IConst.WXD_FACTOR));
             origin.setQnh(Integer.parseInt(reader.get(3)));
             origin.setHeight(Integer.parseInt(reader.get(4)));
             origin.setFlightId(Integer.parseInt(reader.get(5)));

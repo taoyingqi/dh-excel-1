@@ -25,6 +25,15 @@ public class OriginHandler {
     }
 
     @Test
+    public void testGetList() throws IOException {
+        List<Origin> list = OriginDao.getList(2, 3);
+        System.out.println(list.size());
+        for (Origin origin : list) {
+            System.out.println(origin);
+        }
+    }
+
+    @Test
     public void testGet() {
         Origin origin = null;
         try {
