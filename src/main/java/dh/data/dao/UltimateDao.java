@@ -45,13 +45,20 @@ public class UltimateDao {
 
 
     public static void save(Ultimate ultimate) {
+        write(ultimate);
+        output();
+    }
 
+    public static void saveList(List<Ultimate> list) {
+        for (Ultimate ultimate : list) {
+            write(ultimate);
+        }
         output();
     }
 
     public static Ultimate get(int index) {
         if (index < headerLines) {
-            throw new ArrayIndexOutOfBoundsException("从第" + headerLines + "开始读");
+            throw new ArrayIndexOutOfBoundsException("从第" + headerLines + "行开始读");
         }
         row = sheet.getRow(index);
         return parse(row);
@@ -156,7 +163,7 @@ public class UltimateDao {
         // Height高度最大下降率
         row.createCell(12).setCellValue(TimeUtil.formatDate(ultimate.getHeightMdc().getStartTime().getTime(), TIME_TYPE));
         row.createCell(13).setCellValue(TimeUtil.formatDate(ultimate.getHeightMdc().getEndTime().getTime(), TIME_TYPE));
-        row.createCell(11).setCellValue(ultimate.getHeightMdc().getDownRate());
+        row.createCell(14).setCellValue(ultimate.getHeightMdc().getDownRate());
         // 下降率超过500英尺每分钟
         row.createCell(15).setCellValue(ultimate.getDownRateGt500n());
         row.createCell(16).setCellValue(TimeUtil.formatDate(ultimate.getDownRateGt500Ld().getStartTime().getTime(), TIME_TYPE));

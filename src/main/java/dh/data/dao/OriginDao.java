@@ -3,7 +3,6 @@ package dh.data.dao;
 import com.csvreader.CsvReader;
 import dh.data.config.IConst;
 import dh.data.model.Origin;
-import dh.data.util.PathUtil;
 import dh.data.util.TimeUtil;
 
 import java.io.FileInputStream;
@@ -25,7 +24,7 @@ public class OriginDao {
     static {
         // 对读取Excel表格标题测试
         try {
-            InputStream is = new FileInputStream(PathUtil.getClassPath() + file);
+            InputStream is = new FileInputStream(IConst.PATH + file);
 //            BufferedReader reader = new BufferedReader(new FileReader(PathUtil.getClassPath() + file));
             csvReader = new CsvReader(is,',', Charset.forName("GB2312"));
         } catch (Exception e) {

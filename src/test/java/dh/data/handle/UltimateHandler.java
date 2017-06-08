@@ -1,6 +1,7 @@
 package dh.data.handle;
 
 import dh.data.dao.UltimateDao;
+import dh.data.model.Sample;
 import dh.data.model.Ultimate;
 import dh.data.util.TimeUtil;
 import org.apache.poi.ss.usermodel.DateUtil;
@@ -22,6 +23,32 @@ public class UltimateHandler {
         ultimate.setLast1Down500Time(new Date());
         ultimate.setDown0n(1);
         ultimate.setFirst1Down0Time(new Date());
+        ultimate.setDurationTime(new Date());
+        ultimate.setWxdMdc(new Sample(
+                new Date(),
+                new Date(),
+                3,
+                null
+        ));
+        ultimate.setQnhMdc(new Sample(
+                new Date(),
+                new Date(),
+                4,
+                null
+        ));
+        ultimate.setHeightMdc(new Sample(
+                new Date(),
+                new Date(),
+                -390,
+                null
+        ));
+        ultimate.setDownRateGt500n(5);
+        ultimate.setDownRateGt500Ld(new Sample(
+                new Date(),
+                new Date(),
+                null,
+                32000
+        ));
         UltimateDao.save(ultimate);
     }
 

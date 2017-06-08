@@ -18,11 +18,21 @@ public class Mid {
     private Integer durationSec;
 
     //航班高度
-    static class FH {
+    public static class FH {
         private Date time;
         private Integer height;
         private Sample sample1;
         private Sample sample2;
+
+        public FH() {
+        }
+
+        public FH(Date time, Integer height, Sample sample1, Sample sample2) {
+            this.time = time;
+            this.height = height;
+            this.sample1 = sample1;
+            this.sample2 = sample2;
+        }
 
         public Date getTime() {
             return time;
