@@ -6,6 +6,7 @@ import dh.data.model.Sample;
 import dh.data.util.TimeUtil;
 import org.apache.poi.poifs.filesystem.POIFSFileSystem;
 import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.util.CellRangeAddress;
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
@@ -98,7 +99,107 @@ public class MidDao {
         sheet = workbook.getSheetAt(0);
         // 样式设置
         sheet.setColumnWidth(0, 1800);
+        sheet.setColumnWidth(1, 4000);
+        sheet.setColumnWidth(2, 2000);
+        sheet.setColumnWidth(3, 4000);
+        sheet.setColumnWidth(4, 4000);
+        sheet.setColumnWidth(5, 2000);
+        sheet.setColumnWidth(6, 4000);
+        sheet.setColumnWidth(7, 4000);
+        sheet.setColumnWidth(8, 2000);
+        sheet.setColumnWidth(9, 4000);
+        sheet.setColumnWidth(10, 2000);
+        sheet.setColumnWidth(11, 4000);
+        sheet.setColumnWidth(12, 4000);
+        sheet.setColumnWidth(13, 2000);
+        sheet.setColumnWidth(14, 4000);
+        sheet.setColumnWidth(15, 4000);
+        sheet.setColumnWidth(16, 2000);
+        sheet.setColumnWidth(17, 4000);
+        sheet.setColumnWidth(18, 2000);
+        sheet.setColumnWidth(19, 4000);
+        sheet.setColumnWidth(20, 4000);
+        sheet.setColumnWidth(21, 2000);
+        sheet.setColumnWidth(22, 4000);
+        sheet.setColumnWidth(23, 4000);
+        sheet.setColumnWidth(24, 2000);
+        sheet.setColumnWidth(25, 1500);
+        sheet.setColumnWidth(26, 1300);
+        sheet.setColumnWidth(27, 1500);
+        sheet.setColumnWidth(28, 4000);
+        sheet.setColumnWidth(29, 4000);
+        // 合并单元格
+        sheet.addMergedRegion(new CellRangeAddress(0,2,0,0));
+        // 无线电高度口径
+        sheet.addMergedRegion(new CellRangeAddress(0,0,1,8));
+        sheet.addMergedRegion(new CellRangeAddress(1,2,1,1));
+        sheet.addMergedRegion(new CellRangeAddress(1,2,2,2));
+        sheet.addMergedRegion(new CellRangeAddress(1,1,3,5));
+        sheet.addMergedRegion(new CellRangeAddress(1,1,6,8));
+        // QNH高度口径
+        sheet.addMergedRegion(new CellRangeAddress(0,0,9,16));
+        sheet.addMergedRegion(new CellRangeAddress(1,2,9,9));
+        sheet.addMergedRegion(new CellRangeAddress(1,2,10,10));
+        sheet.addMergedRegion(new CellRangeAddress(1,1,11,13));
+        sheet.addMergedRegion(new CellRangeAddress(1,1,14,16));
+        // Height高度口径
+        sheet.addMergedRegion(new CellRangeAddress(0,0,17,24));
+        sheet.addMergedRegion(new CellRangeAddress(1,2,17,17));
+        sheet.addMergedRegion(new CellRangeAddress(1,2,18,18));
+        sheet.addMergedRegion(new CellRangeAddress(1,1,19,21));
+        sheet.addMergedRegion(new CellRangeAddress(1,1,22,24));
+        //
+        sheet.addMergedRegion(new CellRangeAddress(1,2,25,25));
+        sheet.addMergedRegion(new CellRangeAddress(1,2,26,26));
+        sheet.addMergedRegion(new CellRangeAddress(1,2,27,27));
+        sheet.addMergedRegion(new CellRangeAddress(1,2,28,28));
+        sheet.addMergedRegion(new CellRangeAddress(1,2,29,29));
 
+        // 第一行
+        row = sheet.createRow(0);
+        row.createCell(0).setCellValue("航班ID");
+        row.createCell(1).setCellValue("无线电高度口径");
+        row.createCell(9).setCellValue("QNH高度口径");
+        row.createCell(17).setCellValue("Height高度口径");
+        // 第二行
+        row = sheet.createRow(1);
+        row.createCell(1).setCellValue("时刻");
+        row.createCell(2).setCellValue("高度");
+        row.createCell(3).setCellValue("0.25秒采样/0.5秒高度变化 即时下降率");
+        row.createCell(6).setCellValue("0.25/0.5/2 持续下降率（平均值）");
+        row.createCell(9).setCellValue("时刻");
+        row.createCell(10).setCellValue("高度");
+        row.createCell(11).setCellValue("1秒采样/1秒高度变化 即时下降率");
+        row.createCell(14).setCellValue("1秒/1秒/持续2秒 持续下降率（平均值）");
+        row.createCell(17).setCellValue("时刻");
+        row.createCell(18).setCellValue("高度");
+        row.createCell(19).setCellValue("1秒采样/1秒高度变化 即时下降率");
+        row.createCell(22).setCellValue("1秒/1秒/持续2秒 持续下降率（平均值）");
+        row.createCell(25).setCellValue("无线电");
+        row.createCell(26).setCellValue("QNH");
+        row.createCell(27).setCellValue("Height");
+        row.createCell(28).setCellValue("综合至少两个满足");
+        row.createCell(29).setCellValue("持续时间");
+        // 第三行
+        row = sheet.createRow(2);
+        row.createCell(3).setCellValue("起始时刻");
+        row.createCell(4).setCellValue("截止时刻");
+        row.createCell(5).setCellValue("下降率");
+        row.createCell(6).setCellValue("起始时刻");
+        row.createCell(7).setCellValue("截止时刻");
+        row.createCell(8).setCellValue("下降率");
+        row.createCell(11).setCellValue("起始时刻");
+        row.createCell(12).setCellValue("截止时刻");
+        row.createCell(13).setCellValue("下降率");
+        row.createCell(14).setCellValue("起始时刻");
+        row.createCell(15).setCellValue("截止时刻");
+        row.createCell(16).setCellValue("下降率");
+        row.createCell(19).setCellValue("起始时刻");
+        row.createCell(20).setCellValue("截止时刻");
+        row.createCell(21).setCellValue("下降率");
+        row.createCell(22).setCellValue("起始时刻");
+        row.createCell(23).setCellValue("截止时刻");
+        row.createCell(24).setCellValue("下降率");
         //输出到excel
         output();
     }
@@ -209,8 +310,9 @@ public class MidDao {
 
         row.createCell(25).setCellValue(mid.getWxdCond());
         row.createCell(26).setCellValue(mid.getQnhCond());
-        row.createCell(27).setCellValue(mid.getMultiCond());
-        row.createCell(28).setCellValue(mid.getDurationSec());
+        row.createCell(27).setCellValue(mid.getHeightCond());
+        row.createCell(28).setCellValue(mid.getMultiCond());
+        row.createCell(29).setCellValue(mid.getDurationSec());
     }
 
 }

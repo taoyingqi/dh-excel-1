@@ -90,17 +90,17 @@ public class UltimateDao {
         sheet.setColumnWidth(5, 4500);
         sheet.setColumnWidth(6, 4000);
         sheet.setColumnWidth(7, 4000);
-        sheet.setColumnWidth(8, 4000);
+        sheet.setColumnWidth(8, 2000);
         sheet.setColumnWidth(9, 4000);
         sheet.setColumnWidth(10, 4000);
-        sheet.setColumnWidth(11, 4000);
+        sheet.setColumnWidth(11, 2000);
         sheet.setColumnWidth(12, 4000);
         sheet.setColumnWidth(13, 4000);
-        sheet.setColumnWidth(14, 4000);
-        sheet.setColumnWidth(15, 4000);
+        sheet.setColumnWidth(14, 2000);
+        sheet.setColumnWidth(15, 2000);
         sheet.setColumnWidth(16, 4000);
         sheet.setColumnWidth(17, 4000);
-        sheet.setColumnWidth(18, 4000);
+        sheet.setColumnWidth(18, 2000);
         // 单元格样式
         XSSFCellStyle cellStyle = workbook.createCellStyle();
         cellStyle.setAlignment(XSSFCellStyle.ALIGN_CENTER);
