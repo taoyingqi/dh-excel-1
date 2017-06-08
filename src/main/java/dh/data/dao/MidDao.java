@@ -54,11 +54,6 @@ public class MidDao {
         output();
     }
 
-    public static List<Mid> getAll() {
-        List<Mid> list = null;
-        return list;
-    }
-
 
     public static Mid get(int index) {
         if (index < headerLines) {
@@ -68,9 +63,27 @@ public class MidDao {
         return parse(row);
     }
 
-    public static List<Mid> getList(int start, int end) {
+    public static List<Mid> getAll() {
         List<Mid> list = new ArrayList<>();
         for (int i = headerLines; i <= sheet.getLastRowNum(); i++) {
+            list.add(parse(sheet.getRow(i)));
+        }
+        return list;
+    }
+
+
+    public static List<Mid> getList(int start, int end) {
+        if (start < 0) {
+            throw new ArrayIndexOutOfBoundsException(start);
+        }
+        if (start > end) {
+            throw new RuntimeException("start 必须小于 end");
+        }
+        List<Mid> list = new ArrayList<>();
+        for (int i = start; i <= sheet.getLastRowNum(); i++) {
+            if (i == end) {
+                break;
+            }
             list.add(parse(sheet.getRow(i)));
         }
         return list;
@@ -82,18 +95,12 @@ public class MidDao {
         // 生成一个表格
         workbook.createSheet(sheetName);
         // 设置表头
+        sheet = workbook.getSheetAt(0);
+        // 样式设置
+        sheet.setColumnWidth(0, 1800);
 
-        //
-        try {
-            OutputStream os = new FileOutputStream(IConst.PATH + fileName);
-            workbook.write(os);
-            os.flush();
-            os.close();
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        //输出到excel
+        output();
     }
 
     // 写入到文件
