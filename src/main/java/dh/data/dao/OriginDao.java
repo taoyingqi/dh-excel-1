@@ -32,14 +32,6 @@ public class OriginDao {
         }
     }
 
-    public static boolean save(Origin origin) {
-        return true;
-    }
-
-    public static boolean saveList(List<Origin> list) {
-        return true;
-    }
-
     public static List<Origin> getAll() throws IOException {
         List<Origin> list = new ArrayList<>();
         csvReader.readHeaders(); //逃过表头

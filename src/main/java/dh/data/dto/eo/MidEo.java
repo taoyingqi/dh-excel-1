@@ -2,6 +2,9 @@ package dh.data.dto.eo;
 
 import dh.data.common.dto.BaseEo;
 import dh.data.model.Mid;
+import dh.data.util.TimeUtil;
+
+import static dh.data.util.TimeUtil.TIME_MILLIS_TYPE;
 
 /**
  * Created by MT-T450 on 2017/6/7.
@@ -155,9 +158,55 @@ public class MidEo extends BaseEo<Mid> {
                 '}';
     }
 
-    @Override
-    protected void processBean(Mid paramT) {
+    public MidEo() {
+    }
 
+    public MidEo(Mid model) {
+        fromModel(model);
+    }
+
+
+    @Override
+    protected void processBean(Mid mid) {
+        this.setFlightId("" + mid.getFlightId());
+        // 无线电高度口径
+        this.setWxdFh(new FH(TimeUtil.formatDate(mid.getWxdFh().getTime(), TIME_MILLIS_TYPE),
+                "" + mid.getWxdFh().getHeight(),
+                new SampleEo(TimeUtil.formatDate(mid.getWxdFh().getSample1().getStartTime(), TIME_MILLIS_TYPE),
+                        TimeUtil.formatDate(mid.getWxdFh().getSample1().getEndTime(), TIME_MILLIS_TYPE),
+                        "" + mid.getWxdFh().getSample1().getDownRate(),
+                        null),
+                new SampleEo(TimeUtil.formatDate(mid.getWxdFh().getSample2().getStartTime(), TIME_MILLIS_TYPE),
+                        TimeUtil.formatDate(mid.getWxdFh().getSample2().getEndTime(), TIME_MILLIS_TYPE),
+                        "" + mid.getWxdFh().getSample2().getDownRate(),
+                        null)));
+        // QNH高度口径
+        this.setQnhFh(new FH(TimeUtil.formatDate(mid.getQnhFh().getTime(), TIME_MILLIS_TYPE),
+                "" + mid.getQnhFh().getHeight(),
+                new SampleEo(TimeUtil.formatDate(mid.getQnhFh().getSample1().getStartTime(), TIME_MILLIS_TYPE),
+                        TimeUtil.formatDate(mid.getQnhFh().getSample1().getEndTime(), TIME_MILLIS_TYPE),
+                        "" + mid.getQnhFh().getSample1().getDownRate(),
+                        null),
+                new SampleEo(TimeUtil.formatDate(mid.getQnhFh().getSample2().getStartTime(), TIME_MILLIS_TYPE),
+                        TimeUtil.formatDate(mid.getQnhFh().getSample2().getEndTime(), TIME_MILLIS_TYPE),
+                        "" + mid.getQnhFh().getSample2().getDownRate(),
+                        null)));
+        // Height高度口径
+        this.setHeightFh(new FH(TimeUtil.formatDate(mid.getQnhFh().getTime(), TIME_MILLIS_TYPE),
+                "" + mid.getQnhFh().getHeight(),
+                new SampleEo(TimeUtil.formatDate(mid.getQnhFh().getSample1().getStartTime(), TIME_MILLIS_TYPE),
+                        TimeUtil.formatDate(mid.getQnhFh().getSample1().getEndTime(), TIME_MILLIS_TYPE),
+                        "" + mid.getQnhFh().getSample1().getDownRate(),
+                        null),
+                new SampleEo(TimeUtil.formatDate(mid.getQnhFh().getSample2().getStartTime(), TIME_MILLIS_TYPE),
+                        TimeUtil.formatDate(mid.getQnhFh().getSample2().getEndTime(), TIME_MILLIS_TYPE),
+                        "" + mid.getQnhFh().getSample2().getDownRate(),
+                        null)));
+        this.setWxdCond("" + mid.getWxdCond());
+        this.setQnhCond("" + mid.getQnhCond());
+        this.setHeightCond("" + mid.getHeightCond());
+        this.setMultiCond("" + mid.getMultiCond());
+        this.setDurationSec("" + mid.getDurationSec());
     }
 
 }
