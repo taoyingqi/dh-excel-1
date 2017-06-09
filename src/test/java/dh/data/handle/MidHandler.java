@@ -3,8 +3,10 @@ package dh.data.handle;
 import dh.data.dao.MidDao;
 import dh.data.model.Mid;
 import dh.data.model.Sample;
+import dh.data.service.MidService;
 import org.junit.Test;
 
+import java.io.IOException;
 import java.util.Date;
 
 /**
@@ -34,11 +36,21 @@ public class MidHandler {
     }
 
     @Test
+    public void calc() throws IOException {
+        MidService.calc();
+    }
+
+    @Test
     public void get() {
     }
 
     @Test
     public void getAll() {
+    }
+
+    @Test
+    public void delete() {
+        MidDao.delete();
     }
 
 }

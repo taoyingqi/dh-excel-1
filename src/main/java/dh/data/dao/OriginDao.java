@@ -16,7 +16,7 @@ import java.util.List;
  * Created by MT-T450 on 2017/6/7.
  */
 public class OriginDao {
-    private final static String file = "src/加工过源数据完整.csv";
+    private final static String fileName = "/src/加工过源数据完整.csv";
     private final static String sheetName = "加工过源数据完整";
 
     private static CsvReader csvReader = null;
@@ -24,7 +24,7 @@ public class OriginDao {
     static {
         // 对读取Excel表格标题测试
         try {
-            InputStream is = new FileInputStream(IConst.PATH + file);
+            InputStream is = new FileInputStream(IConst.PATH + fileName);
 //            BufferedReader reader = new BufferedReader(new FileReader(PathUtil.getClassPath() + file));
             csvReader = new CsvReader(is,',', Charset.forName("GB2312"));
         } catch (Exception e) {

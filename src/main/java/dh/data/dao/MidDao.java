@@ -15,6 +15,8 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
+import static dh.data.util.TimeUtil.TIME_MILLIS_TYPE;
+
 /**
  * Created by MT-T450 on 2017/6/7.
  */
@@ -26,8 +28,6 @@ public class MidDao {
     private static XSSFWorkbook workbook = null;
     private static XSSFSheet sheet = null;
     private static XSSFRow row = null;
-
-    public final static String TIME_TYPE = "HH:mm:ss:SSS"; //时间格式
 
     static {
         try {
@@ -90,7 +90,8 @@ public class MidDao {
         return list;
     }
 
-    private static void create() {
+    // 创建新的excel，并生成表头
+    public static void create() {
         // 声明一个工作薄
         workbook = new XSSFWorkbook();
         // 生成一个表格
@@ -204,6 +205,14 @@ public class MidDao {
         output();
     }
 
+    public static void delete() {
+        File file = new File(IConst.PATH + fileName);
+        if (file.exists()) {
+            System.out.println("删除文件：" + IConst.PATH + fileName);
+            file.delete();
+        }
+    }
+
     // 写入到文件
     public static void output() {
         try {
@@ -223,49 +232,49 @@ public class MidDao {
         mid.setFlightId((int) row.getCell(0).getNumericCellValue());
         // 无线电高度口径
         mid.setWxdFh(new Mid.FH(
-                TimeUtil.parseDate(row.getCell(1).getStringCellValue(), TIME_TYPE),
+                TimeUtil.parseDate(row.getCell(1).getStringCellValue(), TIME_MILLIS_TYPE),
                 (int) row.getCell(2).getNumericCellValue(),
                 new Sample(
-                        TimeUtil.parseDate(row.getCell(3).getStringCellValue(), TIME_TYPE),
-                        TimeUtil.parseDate(row.getCell(4).getStringCellValue(), TIME_TYPE),
+                        TimeUtil.parseDate(row.getCell(3).getStringCellValue(), TIME_MILLIS_TYPE),
+                        TimeUtil.parseDate(row.getCell(4).getStringCellValue(), TIME_MILLIS_TYPE),
                         (int) row.getCell(5).getNumericCellValue(),
                         null
                 ),
                 new Sample(
-                        TimeUtil.parseDate(row.getCell(6).getStringCellValue(), TIME_TYPE),
-                        TimeUtil.parseDate(row.getCell(7).getStringCellValue(), TIME_TYPE),
+                        TimeUtil.parseDate(row.getCell(6).getStringCellValue(), TIME_MILLIS_TYPE),
+                        TimeUtil.parseDate(row.getCell(7).getStringCellValue(), TIME_MILLIS_TYPE),
                         (int) row.getCell(8).getNumericCellValue(),
                         null
                 )));
         // QNH高度口径
         mid.setQnhFh(new Mid.FH(
-                TimeUtil.parseDate(row.getCell(9).getStringCellValue(), TIME_TYPE),
+                TimeUtil.parseDate(row.getCell(9).getStringCellValue(), TIME_MILLIS_TYPE),
                 (int) row.getCell(10).getNumericCellValue(),
                 new Sample(
-                        TimeUtil.parseDate(row.getCell(11).getStringCellValue(), TIME_TYPE),
-                        TimeUtil.parseDate(row.getCell(12).getStringCellValue(), TIME_TYPE),
+                        TimeUtil.parseDate(row.getCell(11).getStringCellValue(), TIME_MILLIS_TYPE),
+                        TimeUtil.parseDate(row.getCell(12).getStringCellValue(), TIME_MILLIS_TYPE),
                         (int) row.getCell(13).getNumericCellValue(),
                         null
                 ),
                 new Sample(
-                        TimeUtil.parseDate(row.getCell(14).getStringCellValue(), TIME_TYPE),
-                        TimeUtil.parseDate(row.getCell(15).getStringCellValue(), TIME_TYPE),
+                        TimeUtil.parseDate(row.getCell(14).getStringCellValue(), TIME_MILLIS_TYPE),
+                        TimeUtil.parseDate(row.getCell(15).getStringCellValue(), TIME_MILLIS_TYPE),
                         (int) row.getCell(16).getNumericCellValue(),
                         null
                 )));
         // Height高度口径
         mid.setQnhFh(new Mid.FH(
-                TimeUtil.parseDate(row.getCell(17).getStringCellValue(), TIME_TYPE),
+                TimeUtil.parseDate(row.getCell(17).getStringCellValue(), TIME_MILLIS_TYPE),
                 (int) row.getCell(18).getNumericCellValue(),
                 new Sample(
-                        TimeUtil.parseDate(row.getCell(19).getStringCellValue(), TIME_TYPE),
-                        TimeUtil.parseDate(row.getCell(20).getStringCellValue(), TIME_TYPE),
+                        TimeUtil.parseDate(row.getCell(19).getStringCellValue(), TIME_MILLIS_TYPE),
+                        TimeUtil.parseDate(row.getCell(20).getStringCellValue(), TIME_MILLIS_TYPE),
                         (int) row.getCell(21).getNumericCellValue(),
                         null
                 ),
                 new Sample(
-                        TimeUtil.parseDate(row.getCell(22).getStringCellValue(), TIME_TYPE),
-                        TimeUtil.parseDate(row.getCell(23).getStringCellValue(), TIME_TYPE),
+                        TimeUtil.parseDate(row.getCell(22).getStringCellValue(), TIME_MILLIS_TYPE),
+                        TimeUtil.parseDate(row.getCell(23).getStringCellValue(), TIME_MILLIS_TYPE),
                         (int) row.getCell(24).getNumericCellValue(),
                         null
                 )));
@@ -281,31 +290,31 @@ public class MidDao {
         row = sheet.createRow(sheet.getLastRowNum() + 1);
         row.createCell(0).setCellValue(mid.getFlightId());
         // 无线电高度口径
-        row.createCell(1).setCellValue(TimeUtil.formatDate(mid.getWxdFh().getTime().getTime(), TIME_TYPE));
+        row.createCell(1).setCellValue(TimeUtil.formatDate(mid.getWxdFh().getTime(), TIME_MILLIS_TYPE));
         row.createCell(2).setCellValue(mid.getWxdFh().getHeight());
-        row.createCell(3).setCellValue(TimeUtil.formatDate(mid.getWxdFh().getSample1().getStartTime().getTime(), TIME_TYPE));
-        row.createCell(4).setCellValue(TimeUtil.formatDate(mid.getWxdFh().getSample1().getEndTime().getTime(), TIME_TYPE));
+        row.createCell(3).setCellValue(TimeUtil.formatDate(mid.getWxdFh().getSample1().getStartTime(), TIME_MILLIS_TYPE));
+        row.createCell(4).setCellValue(TimeUtil.formatDate(mid.getWxdFh().getSample1().getEndTime(), TIME_MILLIS_TYPE));
         row.createCell(5).setCellValue(mid.getWxdFh().getSample1().getDownRate());
-        row.createCell(6).setCellValue(TimeUtil.formatDate(mid.getWxdFh().getSample2().getStartTime().getTime(), TIME_TYPE));
-        row.createCell(7).setCellValue(TimeUtil.formatDate(mid.getWxdFh().getSample2().getEndTime().getTime(), TIME_TYPE));
+        row.createCell(6).setCellValue(TimeUtil.formatDate(mid.getWxdFh().getSample2().getStartTime(), TIME_MILLIS_TYPE));
+        row.createCell(7).setCellValue(TimeUtil.formatDate(mid.getWxdFh().getSample2().getEndTime(), TIME_MILLIS_TYPE));
         row.createCell(8).setCellValue(mid.getWxdFh().getSample2().getDownRate());
         // QNH高度口径
-        row.createCell(9).setCellValue(TimeUtil.formatDate(mid.getQnhFh().getTime().getTime(), TIME_TYPE));
+        row.createCell(9).setCellValue(TimeUtil.formatDate(mid.getQnhFh().getTime(), TIME_MILLIS_TYPE));
         row.createCell(10).setCellValue(mid.getQnhFh().getHeight());
-        row.createCell(11).setCellValue(TimeUtil.formatDate(mid.getQnhFh().getSample1().getStartTime().getTime(), TIME_TYPE));
-        row.createCell(12).setCellValue(TimeUtil.formatDate(mid.getQnhFh().getSample1().getEndTime().getTime(), TIME_TYPE));
+        row.createCell(11).setCellValue(TimeUtil.formatDate(mid.getQnhFh().getSample1().getStartTime(), TIME_MILLIS_TYPE));
+        row.createCell(12).setCellValue(TimeUtil.formatDate(mid.getQnhFh().getSample1().getEndTime(), TIME_MILLIS_TYPE));
         row.createCell(13).setCellValue(mid.getQnhFh().getSample1().getDownRate());
-        row.createCell(14).setCellValue(TimeUtil.formatDate(mid.getQnhFh().getSample2().getStartTime().getTime(), TIME_TYPE));
-        row.createCell(15).setCellValue(TimeUtil.formatDate(mid.getQnhFh().getSample2().getEndTime().getTime(), TIME_TYPE));
+        row.createCell(14).setCellValue(TimeUtil.formatDate(mid.getQnhFh().getSample2().getStartTime(), TIME_MILLIS_TYPE));
+        row.createCell(15).setCellValue(TimeUtil.formatDate(mid.getQnhFh().getSample2().getEndTime(), TIME_MILLIS_TYPE));
         row.createCell(16).setCellValue(mid.getQnhFh().getSample2().getDownRate());
         // Height高度口径
-        row.createCell(17).setCellValue(TimeUtil.formatDate(mid.getQnhFh().getTime().getTime(), TIME_TYPE));
+        row.createCell(17).setCellValue(TimeUtil.formatDate(mid.getQnhFh().getTime(), TIME_MILLIS_TYPE));
         row.createCell(18).setCellValue(mid.getQnhFh().getHeight());
-        row.createCell(19).setCellValue(TimeUtil.formatDate(mid.getQnhFh().getSample1().getStartTime().getTime(), TIME_TYPE));
-        row.createCell(20).setCellValue(TimeUtil.formatDate(mid.getQnhFh().getSample1().getEndTime().getTime(), TIME_TYPE));
+        row.createCell(19).setCellValue(TimeUtil.formatDate(mid.getQnhFh().getSample1().getStartTime(), TIME_MILLIS_TYPE));
+        row.createCell(20).setCellValue(TimeUtil.formatDate(mid.getQnhFh().getSample1().getEndTime(), TIME_MILLIS_TYPE));
         row.createCell(21).setCellValue(mid.getQnhFh().getSample1().getDownRate());
-        row.createCell(22).setCellValue(TimeUtil.formatDate(mid.getQnhFh().getSample2().getStartTime().getTime(), TIME_TYPE));
-        row.createCell(23).setCellValue(TimeUtil.formatDate(mid.getQnhFh().getSample2().getEndTime().getTime(), TIME_TYPE));
+        row.createCell(22).setCellValue(TimeUtil.formatDate(mid.getQnhFh().getSample2().getStartTime(), TIME_MILLIS_TYPE));
+        row.createCell(23).setCellValue(TimeUtil.formatDate(mid.getQnhFh().getSample2().getEndTime(), TIME_MILLIS_TYPE));
         row.createCell(24).setCellValue(mid.getQnhFh().getSample2().getDownRate());
 
         row.createCell(25).setCellValue(mid.getWxdCond());

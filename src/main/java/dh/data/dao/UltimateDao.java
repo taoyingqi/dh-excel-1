@@ -16,6 +16,8 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
+import static dh.data.util.TimeUtil.TIME_MILLIS_TYPE;
+
 /**
  * Created by MT-T450 on 2017/6/8.
  */
@@ -28,8 +30,6 @@ public class UltimateDao {
     private static XSSFWorkbook workbook = null;
     private static XSSFSheet sheet = null;
     private static XSSFRow row = null;
-
-    public final static String TIME_TYPE = "HH:mm:ss:SSS"; //时间格式
 
     static {
         try {
@@ -105,92 +105,27 @@ public class UltimateDao {
         XSSFCellStyle cellStyle = workbook.createCellStyle();
         cellStyle.setAlignment(XSSFCellStyle.ALIGN_CENTER);
         // 合并单元格
-        sheet.addMergedRegion(new CellRangeAddress(
-                0,
-                2,
-                0,
-                0
-        ));
-        sheet.addMergedRegion(new CellRangeAddress(
-                0,
-                2,
-                1,
-                1
-        ));
-        sheet.addMergedRegion(new CellRangeAddress(
-                0,
-                2,
-                2,
-                2
-        ));
-        sheet.addMergedRegion(new CellRangeAddress(
-                0,
-                2,
-                3,
-                3
-        ));
-        sheet.addMergedRegion(new CellRangeAddress(
-                0,
-                2,
-                4,
-                4
-        ));
+        sheet.addMergedRegion(new CellRangeAddress(0, 2, 0, 0));
+        sheet.addMergedRegion(new CellRangeAddress(0, 2, 1,1));
+        sheet.addMergedRegion(new CellRangeAddress(0, 2, 2, 2));
+        sheet.addMergedRegion(new CellRangeAddress(0, 2, 3, 3));
+        sheet.addMergedRegion(new CellRangeAddress(0, 2, 4, 4));
 
-        sheet.addMergedRegion(new CellRangeAddress(
-                0,
-                2,
-                5,
-                5
-        ));
+        sheet.addMergedRegion(new CellRangeAddress(0, 2, 5, 5));
         // 三种来源各取一个口径最大下降率
-        sheet.addMergedRegion(new CellRangeAddress(
-                0,
-                0,
-                6,
-                14
-        ));
+        sheet.addMergedRegion(new CellRangeAddress(0, 0, 6, 14));
         // 无线电高度最大下降率
-        sheet.addMergedRegion(new CellRangeAddress(
-                1,
-                1,
-                6,
-                8
-        ));
+        sheet.addMergedRegion(new CellRangeAddress(1, 1, 6, 8));
         // QNH高度最大下降率
-        sheet.addMergedRegion(new CellRangeAddress(
-                1,
-                1,
-                9,
-                11
-        ));
+        sheet.addMergedRegion(new CellRangeAddress(1, 1, 9, 11));
         // Height高度最大下降率
-        sheet.addMergedRegion(new CellRangeAddress(
-                1,
-                1,
-                12,
-                14
-        ));
+        sheet.addMergedRegion(new CellRangeAddress(1, 1, 12, 14));
         // 下降率超过500英尺每分钟
-        sheet.addMergedRegion(new CellRangeAddress(
-                0,
-                0,
-                15,
-                18
-        ));
+        sheet.addMergedRegion(new CellRangeAddress(0, 0, 15, 18));
         // 最长一次持续毫秒
-        sheet.addMergedRegion(new CellRangeAddress(
-                1,
-                2,
-                15,
-                15
-        ));
+        sheet.addMergedRegion(new CellRangeAddress(1, 2, 15, 15));
         // 最长一次持续毫秒
-        sheet.addMergedRegion(new CellRangeAddress(
-                1,
-                1,
-                16,
-                18
-        ));
+        sheet.addMergedRegion(new CellRangeAddress(1, 1, 16, 18));
         // 第一行
         row = sheet.createRow(0);
         row.createCell(0).setCellValue("航班ID");
@@ -245,32 +180,32 @@ public class UltimateDao {
         Ultimate ultimate = new Ultimate();
         ultimate.setFlightId((int) row.getCell(0).getNumericCellValue());
         ultimate.setDown500n((int) row.getCell(1).getNumericCellValue());
-        ultimate.setLast1Down500Time(TimeUtil.parseDate(row.getCell(2).getStringCellValue(), TIME_TYPE));
+        ultimate.setLast1Down500Time(TimeUtil.parseDate(row.getCell(2).getStringCellValue(), TIME_MILLIS_TYPE));
         ultimate.setDown0n((int) row.getCell(3).getNumericCellValue());
-        ultimate.setFirst1Down0Time(TimeUtil.parseDate(row.getCell(4).getStringCellValue(), TIME_TYPE));
-        ultimate.setDurationTime(TimeUtil.parseDate(row.getCell(5).getStringCellValue(), TIME_TYPE));
+        ultimate.setFirst1Down0Time(TimeUtil.parseDate(row.getCell(4).getStringCellValue(), TIME_MILLIS_TYPE));
+        ultimate.setDurationTime(TimeUtil.parseDate(row.getCell(5).getStringCellValue(), TIME_MILLIS_TYPE));
         ultimate.setWxdMdc(new Sample(
-                TimeUtil.parseDate(row.getCell(6).getStringCellValue(), TIME_TYPE),
-                TimeUtil.parseDate(row.getCell(7).getStringCellValue(), TIME_TYPE),
+                TimeUtil.parseDate(row.getCell(6).getStringCellValue(), TIME_MILLIS_TYPE),
+                TimeUtil.parseDate(row.getCell(7).getStringCellValue(), TIME_MILLIS_TYPE),
                 (int) row.getCell(8).getNumericCellValue(),
                 null
         ));
         ultimate.setQnhMdc(new Sample(
-                TimeUtil.parseDate(row.getCell(9).getStringCellValue(), TIME_TYPE),
-                TimeUtil.parseDate(row.getCell(10).getStringCellValue(), TIME_TYPE),
+                TimeUtil.parseDate(row.getCell(9).getStringCellValue(), TIME_MILLIS_TYPE),
+                TimeUtil.parseDate(row.getCell(10).getStringCellValue(), TIME_MILLIS_TYPE),
                 (int) row.getCell(11).getNumericCellValue(),
                 null
         ));
         ultimate.setHeightMdc(new Sample(
-                TimeUtil.parseDate(row.getCell(12).getStringCellValue(), TIME_TYPE),
-                TimeUtil.parseDate(row.getCell(13).getStringCellValue(), TIME_TYPE),
+                TimeUtil.parseDate(row.getCell(12).getStringCellValue(), TIME_MILLIS_TYPE),
+                TimeUtil.parseDate(row.getCell(13).getStringCellValue(), TIME_MILLIS_TYPE),
                 (int) row.getCell(14).getNumericCellValue(),
                 null
         ));
         ultimate.setDownRateGt500n((int) row.getCell(15).getNumericCellValue());
         ultimate.setDownRateGt500Ld(new Sample(
-                TimeUtil.parseDate(row.getCell(16).getStringCellValue(), TIME_TYPE),
-                TimeUtil.parseDate(row.getCell(17).getStringCellValue(), TIME_TYPE),
+                TimeUtil.parseDate(row.getCell(16).getStringCellValue(), TIME_MILLIS_TYPE),
+                TimeUtil.parseDate(row.getCell(17).getStringCellValue(), TIME_MILLIS_TYPE),
                 null,
                 (int) row.getCell(18).getNumericCellValue()
         ));
@@ -282,26 +217,26 @@ public class UltimateDao {
         row = sheet.createRow(sheet.getLastRowNum() >= headerLines ? (sheet.getLastRowNum() + 1) : headerLines);
         row.createCell(0).setCellValue(ultimate.getFlightId());
         row.createCell(1).setCellValue(ultimate.getDown500n());
-        row.createCell(2).setCellValue(TimeUtil.formatDate(ultimate.getLast1Down500Time().getTime(), TIME_TYPE));
+        row.createCell(2).setCellValue(TimeUtil.formatDate(ultimate.getLast1Down500Time(), TIME_MILLIS_TYPE));
         row.createCell(3).setCellValue(ultimate.getDown0n());
-        row.createCell(4).setCellValue(TimeUtil.formatDate(ultimate.getFirst1Down0Time().getTime(), TIME_TYPE));
-        row.createCell(5).setCellValue(TimeUtil.formatDate(ultimate.getDurationTime().getTime(), TIME_TYPE));
+        row.createCell(4).setCellValue(TimeUtil.formatDate(ultimate.getFirst1Down0Time(), TIME_MILLIS_TYPE));
+        row.createCell(5).setCellValue(TimeUtil.formatDate(ultimate.getDurationTime(), TIME_MILLIS_TYPE));
         // 无线电高度最大下降率
-        row.createCell(6).setCellValue(TimeUtil.formatDate(ultimate.getWxdMdc().getStartTime().getTime(), TIME_TYPE));
-        row.createCell(7).setCellValue(TimeUtil.formatDate(ultimate.getWxdMdc().getEndTime().getTime(), TIME_TYPE));
+        row.createCell(6).setCellValue(TimeUtil.formatDate(ultimate.getWxdMdc().getStartTime(), TIME_MILLIS_TYPE));
+        row.createCell(7).setCellValue(TimeUtil.formatDate(ultimate.getWxdMdc().getEndTime(), TIME_MILLIS_TYPE));
         row.createCell(8).setCellValue(ultimate.getWxdMdc().getDownRate());
         // QNH高度最大下降率
-        row.createCell(9).setCellValue(TimeUtil.formatDate(ultimate.getQnhMdc().getStartTime().getTime(), TIME_TYPE));
-        row.createCell(10).setCellValue(TimeUtil.formatDate(ultimate.getQnhMdc().getEndTime().getTime(), TIME_TYPE));
+        row.createCell(9).setCellValue(TimeUtil.formatDate(ultimate.getQnhMdc().getStartTime(), TIME_MILLIS_TYPE));
+        row.createCell(10).setCellValue(TimeUtil.formatDate(ultimate.getQnhMdc().getEndTime(), TIME_MILLIS_TYPE));
         row.createCell(11).setCellValue(ultimate.getQnhMdc().getDownRate());
         // Height高度最大下降率
-        row.createCell(12).setCellValue(TimeUtil.formatDate(ultimate.getHeightMdc().getStartTime().getTime(), TIME_TYPE));
-        row.createCell(13).setCellValue(TimeUtil.formatDate(ultimate.getHeightMdc().getEndTime().getTime(), TIME_TYPE));
+        row.createCell(12).setCellValue(TimeUtil.formatDate(ultimate.getHeightMdc().getStartTime(), TIME_MILLIS_TYPE));
+        row.createCell(13).setCellValue(TimeUtil.formatDate(ultimate.getHeightMdc().getEndTime(), TIME_MILLIS_TYPE));
         row.createCell(14).setCellValue(ultimate.getHeightMdc().getDownRate());
         // 下降率超过500英尺每分钟
         row.createCell(15).setCellValue(ultimate.getDownRateGt500n());
-        row.createCell(16).setCellValue(TimeUtil.formatDate(ultimate.getDownRateGt500Ld().getStartTime().getTime(), TIME_TYPE));
-        row.createCell(17).setCellValue(TimeUtil.formatDate(ultimate.getDownRateGt500Ld().getEndTime().getTime(), TIME_TYPE));
+        row.createCell(16).setCellValue(TimeUtil.formatDate(ultimate.getDownRateGt500Ld().getStartTime(), TIME_MILLIS_TYPE));
+        row.createCell(17).setCellValue(TimeUtil.formatDate(ultimate.getDownRateGt500Ld().getEndTime(), TIME_MILLIS_TYPE));
         row.createCell(18).setCellValue(ultimate.getDownRateGt500Ld().getDurationSec());
 
 //        for (int i = 0; i < 18; i++) {

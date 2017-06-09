@@ -15,12 +15,11 @@ import java.util.Locale;
  * Created by MT-T450 on 2017/6/7.
  */
 public class TimeUtil {
-    public static final String DATE_TYPE = "yyyyMMdd";
-    public static final String YEAR_TYPE = "yyyy-MM-dd";
-    public static final String DATE_TIME_TYPE = "yyyyMMddHHmmss";
-    public static final String YEAR_TIME_TYPE = "yyyy-MM-dd HH:mm:ss";
-    public static final String DATE_TIME_MILLIS_TYPE = "yyyyMMddHHmmssSSS";
-    public static final String TIME_TYPE = "HHmmss";
+    public static final String DATE_TYPE = "yyyy-MM-dd";
+    public static final String DATE_TIME_TYPE = "yyyy-MM-dd HH:mm:ss";
+    public static final String DATE_TIME_MILLIS_TYPE = "yyyy:MM:dd HH:mm:ss:SSS";
+    public static final String TIME_TYPE = "HH:mm:ss";
+    public static final String TIME_MILLIS_TYPE = "HH:mm:ss:SSS";
 
 
     public static String formatDate(Long date) {
@@ -34,6 +33,16 @@ public class TimeUtil {
         return DateFormatUtils.format(date, format);
     }
 
+    public static String formatDate(Date date) {
+        return formatDate(date, DATE_TYPE);
+    }
+
+    public static String formatDate(Date date, String format) {
+        if (null == date) {
+            return "";
+        }
+        return DateFormatUtils.format(date, format);
+    }
 
     public static String formatDate(Timestamp date) {
         return formatDate(date, DATE_TYPE);
