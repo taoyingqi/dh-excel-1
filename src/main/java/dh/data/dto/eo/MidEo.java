@@ -172,6 +172,7 @@ public class MidEo extends BaseEo<Mid> {
     @Override
     protected void processBean(Mid mid) {
         this.setFlightId(toStr(mid.getFlightId()));
+
         // 无线电高度口径
         this.setWxdFh(new FH(formatDate(mid.getWxdFh().getTime(), TIME_MILLIS_TYPE),
                 toStr(MidUtil.devWxdFactor(mid.getWxdFh().getHeight())),
@@ -184,32 +185,32 @@ public class MidEo extends BaseEo<Mid> {
                         NumericUtil.toDecimal(MidUtil.devWxdFactor(mid.getWxdFh().getSample2().getDownRate()), 0),
                         null)));
         // QNH高度口径
-//        this.setQnhFh(new FH(formatDate(mid.getQnhFh().getTime(), TIME_MILLIS_TYPE),
-//                toStr(mid.getQnhFh().getHeight()),
-//                new SampleEo(formatDate(mid.getQnhFh().getSample1().getStartTime(), TIME_MILLIS_TYPE),
-//                        formatDate(mid.getQnhFh().getSample1().getEndTime(), TIME_MILLIS_TYPE),
-//                        toStr(mid.getQnhFh().getSample1().getDownRate()),
-//                        null),
-//                new SampleEo(formatDate(mid.getQnhFh().getSample2().getStartTime(), TIME_MILLIS_TYPE),
-//                        formatDate(mid.getQnhFh().getSample2().getEndTime(), TIME_MILLIS_TYPE),
-//                        toStr(mid.getQnhFh().getSample2().getDownRate()),
-//                        null)));
-//        // Height高度口径
-//        this.setHeightFh(new FH(formatDate(mid.getQnhFh().getTime(), TIME_MILLIS_TYPE),
-//                toStr(mid.getQnhFh().getHeight()),
-//                new SampleEo(formatDate(mid.getQnhFh().getSample1().getStartTime(), TIME_MILLIS_TYPE),
-//                        formatDate(mid.getQnhFh().getSample1().getEndTime(), TIME_MILLIS_TYPE),
-//                        toStr(mid.getQnhFh().getSample1().getDownRate()),
-//                        null),
-//                new SampleEo(formatDate(mid.getQnhFh().getSample2().getStartTime(), TIME_MILLIS_TYPE),
-//                        formatDate(mid.getQnhFh().getSample2().getEndTime(), TIME_MILLIS_TYPE),
-//                        toStr(mid.getQnhFh().getSample2().getDownRate()),
-//                        null)));
-//        this.setWxdCond(toStr(mid.getWxdCond()));
-//        this.setQnhCond(toStr(mid.getQnhCond()));
-//        this.setHeightCond(toStr(mid.getHeightCond()));
-//        this.setMultiCond(toStr(mid.getMultiCond()));
-//        this.setDurationSec(toStr(mid.getDurationSec()));
+        this.setQnhFh(new FH(formatDate(mid.getQnhFh().getTime(), TIME_MILLIS_TYPE),
+                toStr(mid.getQnhFh().getHeight()),
+                new SampleEo(formatDate(mid.getQnhFh().getSample1().getStartTime(), TIME_MILLIS_TYPE),
+                        formatDate(mid.getQnhFh().getSample1().getEndTime(), TIME_MILLIS_TYPE),
+                        toStr(mid.getQnhFh().getSample1().getDownRate()),
+                        null),
+                new SampleEo(formatDate(mid.getQnhFh().getSample2().getStartTime(), TIME_MILLIS_TYPE),
+                        formatDate(mid.getQnhFh().getSample2().getEndTime(), TIME_MILLIS_TYPE),
+                        toStr(mid.getQnhFh().getSample2().getDownRate()),
+                        null)));
+        // Height高度口径
+        this.setHeightFh(new FH(formatDate(mid.getHeightFh().getTime(), TIME_MILLIS_TYPE),
+                toStr(mid.getHeightFh().getHeight()),
+                new SampleEo(formatDate(mid.getHeightFh().getSample1().getStartTime(), TIME_MILLIS_TYPE),
+                        formatDate(mid.getHeightFh().getSample1().getEndTime(), TIME_MILLIS_TYPE),
+                        toStr(mid.getHeightFh().getSample1().getDownRate()),
+                        null),
+                new SampleEo(formatDate(mid.getHeightFh().getSample2().getStartTime(), TIME_MILLIS_TYPE),
+                        formatDate(mid.getHeightFh().getSample2().getEndTime(), TIME_MILLIS_TYPE),
+                        toStr(mid.getHeightFh().getSample2().getDownRate()),
+                        null)));
+        this.setWxdCond(toStr(mid.getWxdCond()));
+        this.setQnhCond(toStr(mid.getQnhCond()));
+        this.setHeightCond(toStr(mid.getHeightCond()));
+        this.setMultiCond(toStr(mid.getMultiCond()));
+        this.setDurationSec(toStr(mid.getDurationSec()));
     }
 
 }

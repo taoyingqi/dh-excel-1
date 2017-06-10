@@ -1,5 +1,6 @@
 package dh.data.time;
 
+import dh.data.util.MidUtil;
 import dh.data.util.NumericUtil;
 import org.junit.Test;
 
@@ -23,13 +24,7 @@ public class NumericTest {
 
     @Test
     public void testDecimal() {
-        String str = "";
-        for (int i = 0; i < 4; i++) {
-            str = str.concat("0");
-        }
-        System.out.println(str);
-        DecimalFormat format = new DecimalFormat(".000000");
-        System.out.println(format.format(23.4489f));
+        System.out.println(NumericUtil.toDecimal(MidUtil.devWxdFactor(7386), 0));
     }
 
 }

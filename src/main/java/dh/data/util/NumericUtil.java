@@ -37,7 +37,7 @@ public class NumericUtil {
         if (f == null) {
             return null;
         }
-        String str = "";
+        String str = "0";
         if (n > 0) {
             str = str.concat(".");
         }

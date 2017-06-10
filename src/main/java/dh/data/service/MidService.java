@@ -1,5 +1,6 @@
 package dh.data.service;
 
+import dh.data.config.IConst;
 import dh.data.dao.MidDao;
 import dh.data.dao.OriginDao;
 import dh.data.model.Mid;
@@ -79,6 +80,48 @@ public class MidService {
             }
             // 设置 Qnh
             mid.setQnhFh(qnhFh);
+            // Height
+            Mid.FH heightFH = new Mid.FH();
+            heightFH.setTime(new Date(origin.getTime().getTime() + i % 4 * 250));
+            if (i % 4 == 0) {
+                heightFH.setHeight(origin.getHeight());
+                if (i > 3) {
+                    heightFH.setSample1(new Sample(
+                            midList.get(i - 4).getHeightFh().getTime(),
+                            heightFH.getTime(),
+                            (qnhFh.getHeight() - midList.get(i - 4).getQnhFh().getHeight()) * 60,
+                            null
+                    ));
+                }
+                if (i > 11) {
+                    heightFH.setSample2(new Sample(
+                            midList.get(i - 8).getHeightFh().getTime(),
+                            heightFH.getTime(),
+                            (heightFH.getSample1().getDownRate()
+                                    + midList.get(i - 4).getHeightFh().getSample1().getDownRate()
+                                    + midList.get(i - 8).getHeightFh().getSample1().getDownRate()) / 3,
+                            null
+                    ));
+                }
+            }
+            // 设置 Height
+            mid.setHeightFh(heightFH);
+
+            if (i % 4 == 0) {
+                mid.setWxdCond(wxdFH.getSample2().getDownRate() != null && Math.abs(wxdFH.getSample2().getDownRate()) >= 500 * IConst.WXD_FACTOR);
+                mid.setQnhCond(qnhFh.getSample2().getDownRate() != null && Math.abs(qnhFh.getSample2().getDownRate()) >= 500);
+                mid.setHeightCond(heightFH.getSample2().getDownRate() != null && Math.abs(heightFH.getSample2().getDownRate()) >= 500);
+                int n = 0;
+                if (mid.getWxdCond()) n++;
+                if (mid.getQnhCond()) n++;
+                if (mid.getHeightCond()) n++;
+                mid.setMultiCond(n > 1); // 至少两个平均下降率均超过500英尺
+            }
+            if (mid.getMultiCond() == null || !mid.getMultiCond()) {
+                mid.setDurationSec(0);
+            } else {
+            }
+
             midList.add(mid);
         }
         LOG.info("[保存]");

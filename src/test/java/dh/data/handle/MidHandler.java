@@ -16,6 +16,7 @@ public class MidHandler {
 
     @Test
     public void save() {
+        MidDao.clear();
         Mid mid = new Mid();
         mid.setFlightId(14861);
         mid.setWxdFh(new Mid.FH(new Date(), 2343
@@ -37,6 +38,7 @@ public class MidHandler {
 
     @Test
     public void calc() throws IOException {
+        MidDao.clear();
         MidService.calc();
     }
 

@@ -217,6 +217,13 @@ public class MidDao {
         }
     }
 
+    public static void clear() {
+        LOG.info("[清除旧数据]");
+        for (int i = sheet.getLastRowNum(); i >= headerLines; i--) {
+            sheet.removeRow(sheet.getRow(i));
+        }
+    }
+
     // 写入到文件
     public static void output() {
         try {
@@ -303,29 +310,29 @@ public class MidDao {
         row.createCell(7).setCellValue(midEo.getWxdFh().getSample2().getEndTime());
         row.createCell(8).setCellValue(midEo.getWxdFh().getSample2().getDownRate());
         // QNH高度口径
-//        row.createCell(9).setCellValue(midEo.getQnhFh().getTime());
-//        row.createCell(10).setCellValue(midEo.getQnhFh().getHeight());
-//        row.createCell(11).setCellValue(midEo.getQnhFh().getSample1().getStartTime());
-//        row.createCell(12).setCellValue(midEo.getQnhFh().getSample1().getEndTime());
-//        row.createCell(13).setCellValue(midEo.getQnhFh().getSample1().getDownRate());
-//        row.createCell(14).setCellValue(midEo.getQnhFh().getSample2().getStartTime());
-//        row.createCell(15).setCellValue(midEo.getQnhFh().getSample2().getEndTime());
-//        row.createCell(16).setCellValue(midEo.getQnhFh().getSample2().getDownRate());
-//        // Height高度口径
-//        row.createCell(17).setCellValue(midEo.getQnhFh().getTime());
-//        row.createCell(18).setCellValue(midEo.getQnhFh().getHeight());
-//        row.createCell(19).setCellValue(midEo.getQnhFh().getSample1().getStartTime());
-//        row.createCell(20).setCellValue(midEo.getQnhFh().getSample1().getEndTime());
-//        row.createCell(21).setCellValue(midEo.getQnhFh().getSample1().getDownRate());
-//        row.createCell(22).setCellValue(midEo.getQnhFh().getSample2().getStartTime());
-//        row.createCell(23).setCellValue(midEo.getQnhFh().getSample2().getEndTime());
-//        row.createCell(24).setCellValue(midEo.getQnhFh().getSample2().getDownRate());
-//
-//        row.createCell(25).setCellValue(midEo.getWxdCond());
-//        row.createCell(26).setCellValue(midEo.getQnhCond());
-//        row.createCell(27).setCellValue(midEo.getHeightCond());
-//        row.createCell(28).setCellValue(midEo.getMultiCond());
-//        row.createCell(29).setCellValue(midEo.getDurationSec());
+        row.createCell(9).setCellValue(midEo.getQnhFh().getTime());
+        row.createCell(10).setCellValue(midEo.getQnhFh().getHeight());
+        row.createCell(11).setCellValue(midEo.getQnhFh().getSample1().getStartTime());
+        row.createCell(12).setCellValue(midEo.getQnhFh().getSample1().getEndTime());
+        row.createCell(13).setCellValue(midEo.getQnhFh().getSample1().getDownRate());
+        row.createCell(14).setCellValue(midEo.getQnhFh().getSample2().getStartTime());
+        row.createCell(15).setCellValue(midEo.getQnhFh().getSample2().getEndTime());
+        row.createCell(16).setCellValue(midEo.getQnhFh().getSample2().getDownRate());
+        // Height高度口径
+        row.createCell(17).setCellValue(midEo.getQnhFh().getTime());
+        row.createCell(18).setCellValue(midEo.getQnhFh().getHeight());
+        row.createCell(19).setCellValue(midEo.getQnhFh().getSample1().getStartTime());
+        row.createCell(20).setCellValue(midEo.getQnhFh().getSample1().getEndTime());
+        row.createCell(21).setCellValue(midEo.getQnhFh().getSample1().getDownRate());
+        row.createCell(22).setCellValue(midEo.getQnhFh().getSample2().getStartTime());
+        row.createCell(23).setCellValue(midEo.getQnhFh().getSample2().getEndTime());
+        row.createCell(24).setCellValue(midEo.getQnhFh().getSample2().getDownRate());
+
+        row.createCell(25).setCellValue(midEo.getWxdCond());
+        row.createCell(26).setCellValue(midEo.getQnhCond());
+        row.createCell(27).setCellValue(midEo.getHeightCond());
+        row.createCell(28).setCellValue(midEo.getMultiCond());
+        row.createCell(29).setCellValue(midEo.getDurationSec());
     }
 
 }
