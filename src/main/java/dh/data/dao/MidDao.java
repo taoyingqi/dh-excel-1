@@ -291,31 +291,31 @@ public class MidDao {
         row = sheet.createRow(sheet.getLastRowNum() + 1);
         row.createCell(0).setCellValue(midEo.getFlightId());
         // 无线电高度口径
-        row.createCell(1).setCellValue(TimeUtil.formatDate(midEo.getWxdFh().getTime(), TIME_MILLIS_TYPE));
+        row.createCell(1).setCellValue(midEo.getWxdFh().getTime());
         row.createCell(2).setCellValue(midEo.getWxdFh().getHeight());
-        row.createCell(3).setCellValue(TimeUtil.formatDate(midEo.getWxdFh().getSample1().getStartTime(), TIME_MILLIS_TYPE));
-        row.createCell(4).setCellValue(TimeUtil.formatDate(midEo.getWxdFh().getSample1().getEndTime(), TIME_MILLIS_TYPE));
+        row.createCell(3).setCellValue(midEo.getWxdFh().getSample1().getStartTime());
+        row.createCell(4).setCellValue(midEo.getWxdFh().getSample1().getEndTime());
         row.createCell(5).setCellValue(midEo.getWxdFh().getSample1().getDownRate());
-        row.createCell(6).setCellValue(TimeUtil.formatDate(midEo.getWxdFh().getSample2().getStartTime(), TIME_MILLIS_TYPE));
-        row.createCell(7).setCellValue(TimeUtil.formatDate(midEo.getWxdFh().getSample2().getEndTime(), TIME_MILLIS_TYPE));
+        row.createCell(6).setCellValue(midEo.getWxdFh().getSample2().getStartTime());
+        row.createCell(7).setCellValue(midEo.getWxdFh().getSample2().getEndTime());
         row.createCell(8).setCellValue(midEo.getWxdFh().getSample2().getDownRate());
         // QNH高度口径
-        row.createCell(9).setCellValue(TimeUtil.formatDate(midEo.getQnhFh().getTime(), TIME_MILLIS_TYPE));
+        row.createCell(9).setCellValue(midEo.getQnhFh().getTime());
         row.createCell(10).setCellValue(midEo.getQnhFh().getHeight());
-        row.createCell(11).setCellValue(TimeUtil.formatDate(midEo.getQnhFh().getSample1().getStartTime(), TIME_MILLIS_TYPE));
-        row.createCell(12).setCellValue(TimeUtil.formatDate(midEo.getQnhFh().getSample1().getEndTime(), TIME_MILLIS_TYPE));
+        row.createCell(11).setCellValue(midEo.getQnhFh().getSample1().getStartTime());
+        row.createCell(12).setCellValue(midEo.getQnhFh().getSample1().getEndTime());
         row.createCell(13).setCellValue(midEo.getQnhFh().getSample1().getDownRate());
-        row.createCell(14).setCellValue(TimeUtil.formatDate(midEo.getQnhFh().getSample2().getStartTime(), TIME_MILLIS_TYPE));
-        row.createCell(15).setCellValue(TimeUtil.formatDate(midEo.getQnhFh().getSample2().getEndTime(), TIME_MILLIS_TYPE));
+        row.createCell(14).setCellValue(midEo.getQnhFh().getSample2().getStartTime());
+        row.createCell(15).setCellValue(midEo.getQnhFh().getSample2().getEndTime());
         row.createCell(16).setCellValue(midEo.getQnhFh().getSample2().getDownRate());
         // Height高度口径
-        row.createCell(17).setCellValue(TimeUtil.formatDate(midEo.getQnhFh().getTime(), TIME_MILLIS_TYPE));
+        row.createCell(17).setCellValue(midEo.getQnhFh().getTime());
         row.createCell(18).setCellValue(midEo.getQnhFh().getHeight());
-        row.createCell(19).setCellValue(TimeUtil.formatDate(midEo.getQnhFh().getSample1().getStartTime(), TIME_MILLIS_TYPE));
-        row.createCell(20).setCellValue(TimeUtil.formatDate(midEo.getQnhFh().getSample1().getEndTime(), TIME_MILLIS_TYPE));
+        row.createCell(19).setCellValue(midEo.getQnhFh().getSample1().getStartTime());
+        row.createCell(20).setCellValue(midEo.getQnhFh().getSample1().getEndTime());
         row.createCell(21).setCellValue(midEo.getQnhFh().getSample1().getDownRate());
-        row.createCell(22).setCellValue(TimeUtil.formatDate(midEo.getQnhFh().getSample2().getStartTime(), TIME_MILLIS_TYPE));
-        row.createCell(23).setCellValue(TimeUtil.formatDate(midEo.getQnhFh().getSample2().getEndTime(), TIME_MILLIS_TYPE));
+        row.createCell(22).setCellValue(midEo.getQnhFh().getSample2().getStartTime());
+        row.createCell(23).setCellValue(midEo.getQnhFh().getSample2().getEndTime());
         row.createCell(24).setCellValue(midEo.getQnhFh().getSample2().getDownRate());
 
         row.createCell(25).setCellValue(midEo.getWxdCond());
