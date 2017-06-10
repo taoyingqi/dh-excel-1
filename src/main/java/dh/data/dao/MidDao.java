@@ -219,7 +219,7 @@ public class MidDao {
 
     public static void clear() {
         LOG.info("[清除旧数据]");
-        for (int i = sheet.getLastRowNum(); i >= headerLines; i--) {
+        for (int i = headerLines; i <= sheet.getLastRowNum(); i++) {
             sheet.removeRow(sheet.getRow(i));
         }
     }
@@ -319,14 +319,14 @@ public class MidDao {
         row.createCell(15).setCellValue(midEo.getQnhFh().getSample2().getEndTime());
         row.createCell(16).setCellValue(midEo.getQnhFh().getSample2().getDownRate());
         // Height高度口径
-        row.createCell(17).setCellValue(midEo.getQnhFh().getTime());
-        row.createCell(18).setCellValue(midEo.getQnhFh().getHeight());
-        row.createCell(19).setCellValue(midEo.getQnhFh().getSample1().getStartTime());
-        row.createCell(20).setCellValue(midEo.getQnhFh().getSample1().getEndTime());
-        row.createCell(21).setCellValue(midEo.getQnhFh().getSample1().getDownRate());
-        row.createCell(22).setCellValue(midEo.getQnhFh().getSample2().getStartTime());
-        row.createCell(23).setCellValue(midEo.getQnhFh().getSample2().getEndTime());
-        row.createCell(24).setCellValue(midEo.getQnhFh().getSample2().getDownRate());
+        row.createCell(17).setCellValue(midEo.getHeightFh().getTime());
+        row.createCell(18).setCellValue(midEo.getHeightFh().getHeight());
+        row.createCell(19).setCellValue(midEo.getHeightFh().getSample1().getStartTime());
+        row.createCell(20).setCellValue(midEo.getHeightFh().getSample1().getEndTime());
+        row.createCell(21).setCellValue(midEo.getHeightFh().getSample1().getDownRate());
+        row.createCell(22).setCellValue(midEo.getHeightFh().getSample2().getStartTime());
+        row.createCell(23).setCellValue(midEo.getHeightFh().getSample2().getEndTime());
+        row.createCell(24).setCellValue(midEo.getHeightFh().getSample2().getDownRate());
 
         row.createCell(25).setCellValue(midEo.getWxdCond());
         row.createCell(26).setCellValue(midEo.getQnhCond());

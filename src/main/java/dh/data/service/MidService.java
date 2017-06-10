@@ -23,23 +23,29 @@ public class MidService {
     public static void calc() throws IOException {
         List<Origin> originList = OriginDao.getAll();
         List<Mid> midList = new ArrayList<>();
-        for (int i = 0; i < originList.size(); i++) {
+        for (int i = 0, fi = 0; i < originList.size(); i++) {
             Origin origin = originList.get(i);
             Mid mid = new Mid();
             mid.setFlightId(origin.getFlightId());
+            if (i > 0) {
+                if (originList.get(i).getFlightId().equals(originList.get(i - 1).getFlightId())) {
+                    fi++;
+                } else {
+                    fi = 0;
+                }
+            }
             // Wxd
             Mid.FH wxdFH = new Mid.FH();
-            wxdFH.setTime(new Date(origin.getTime().getTime() + i % 4 * 250));
+            wxdFH.setTime(new Date(origin.getTime().getTime() + fi % 4 * 250));
             wxdFH.setHeight(origin.getWxd());
-
-            if (i > 1) {
+            if (fi > 1) {
                 wxdFH.setSample1(new Sample(
-                        originList.get(i - 2).getTime(),
+                        midList.get(i - 2).getWxdFh().getTime(),
                         wxdFH.getTime(),
                         (origin.getWxd() - originList.get(i - 2).getWxd()) * 120,
                         null));
             }
-            if (i > 9) {
+            if (fi > 9) {
                 Integer sumSample1DownRate = wxdFH.getSample1().getDownRate();
                 for (int j = i - 8; j < i; j++) {
                     sumSample1DownRate += midList.get(j).getWxdFh().getSample1().getDownRate();
@@ -56,10 +62,10 @@ public class MidService {
 
             // Qnh
             Mid.FH qnhFh = new Mid.FH();
-            qnhFh.setTime(new Date(origin.getTime().getTime() + i % 4 * 250));
-            if (i % 4 == 0) {
+            qnhFh.setTime(new Date(origin.getTime().getTime() + fi % 4 * 250));
+            if (fi % 4 == 0) {
                 qnhFh.setHeight(origin.getQnh());
-                if (i > 3) {
+                if (fi > 3) {
                     qnhFh.setSample1(new Sample(
                             midList.get(i - 4).getQnhFh().getTime(),
                             qnhFh.getTime(),
@@ -67,7 +73,7 @@ public class MidService {
                             null
                     ));
                 }
-                if (i > 11) {
+                if (fi > 11) {
                     qnhFh.setSample2(new Sample(
                             midList.get(i - 8).getQnhFh().getTime(),
                             qnhFh.getTime(),
@@ -82,18 +88,18 @@ public class MidService {
             mid.setQnhFh(qnhFh);
             // Height
             Mid.FH heightFH = new Mid.FH();
-            heightFH.setTime(new Date(origin.getTime().getTime() + i % 4 * 250));
-            if (i % 4 == 0) {
+            heightFH.setTime(new Date(origin.getTime().getTime() + fi % 4 * 250));
+            if (fi % 4 == 0) {
                 heightFH.setHeight(origin.getHeight());
-                if (i > 3) {
+                if (fi > 3) {
                     heightFH.setSample1(new Sample(
                             midList.get(i - 4).getHeightFh().getTime(),
                             heightFH.getTime(),
-                            (qnhFh.getHeight() - midList.get(i - 4).getQnhFh().getHeight()) * 60,
+                            (heightFH.getHeight() - midList.get(i - 4).getHeightFh().getHeight()) * 60,
                             null
                     ));
                 }
-                if (i > 11) {
+                if (fi > 11) {
                     heightFH.setSample2(new Sample(
                             midList.get(i - 8).getHeightFh().getTime(),
                             heightFH.getTime(),
@@ -107,22 +113,55 @@ public class MidService {
             // 设置 Height
             mid.setHeightFh(heightFH);
 
-            if (i % 4 == 0) {
-                mid.setWxdCond(wxdFH.getSample2().getDownRate() != null && Math.abs(wxdFH.getSample2().getDownRate()) >= 500 * IConst.WXD_FACTOR);
+            if ((fi - 3) % 4 == 0) {
+                //秒内四个时刻的平均下降率超过500
+                if (wxdFH.getSample2().getDownRate() != null && wxdFH.getSample2().getDownRate() >= 500
+                        && midList.get(i - 1).getWxdFh().getSample2().getDownRate() != null && midList.get(i - 1).getWxdFh().getSample2().getDownRate() >= 500
+                        && midList.get(i - 2).getWxdFh().getSample2().getDownRate() != null && midList.get(i - 2).getWxdFh().getSample2().getDownRate() >= 500
+                        && midList.get(i - 3).getWxdFh().getSample2().getDownRate() != null && midList.get(i - 3).getWxdFh().getSample2().getDownRate() >= 500
+                        ) {
+                    midList.get(i - 3).setWxdCond(true);
+                } else {
+                    midList.get(i - 3).setWxdCond(false);
+                }
+                int n = 0;
+                if (midList.get(i - 3).getWxdCond()) n++;
+                if (midList.get(i - 3).getQnhCond()) n++;
+                if (midList.get(i - 3).getHeightCond()) n++;
+                midList.get(i - 3).setMultiCond(n > 1); // 至少两个平均下降率均超过500英尺
+            }
+            if (fi % 4 == 0) {
                 mid.setQnhCond(qnhFh.getSample2().getDownRate() != null && Math.abs(qnhFh.getSample2().getDownRate()) >= 500);
                 mid.setHeightCond(heightFH.getSample2().getDownRate() != null && Math.abs(heightFH.getSample2().getDownRate()) >= 500);
-                int n = 0;
-                if (mid.getWxdCond()) n++;
-                if (mid.getQnhCond()) n++;
-                if (mid.getHeightCond()) n++;
-                mid.setMultiCond(n > 1); // 至少两个平均下降率均超过500英尺
             }
-            if (mid.getMultiCond() == null || !mid.getMultiCond()) {
-                mid.setDurationSec(0);
-            } else {
-            }
-
             midList.add(mid);
+        }
+        int start = 0, end = 0;
+        for (int i = 0, fi = 0; i < midList.size(); i++) {
+            if (i > 0) {
+                if (midList.get(i).getFlightId().equals(midList.get(i - 1).getFlightId())) {
+                    fi++;
+                } else {
+                    fi = 0;
+                }
+            }
+            if (fi % 4 == 0) {
+                Mid mid = midList.get(i);
+                if (mid.getMultiCond() == null || !mid.getMultiCond()) {
+                    end = i;
+                } else {
+                    if (start == 0L) {
+                        start = i;
+                    } else {
+                    }
+                }
+                if (start != 0 && end != 0 && start < end) {
+                    // 计算持续时间
+                    midList.get(start).setDurationSec(0);
+                    midList.get(end - 1).setDurationSec((int) (midList.get(end).getHeightFh().getTime().getTime() - midList.get(start).getHeightFh().getTime().getTime()));
+                    start = 0; end = 0;
+                }
+            }
         }
         LOG.info("[保存]");
         MidDao.saveList(midList);
