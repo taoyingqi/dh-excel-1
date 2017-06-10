@@ -25,6 +25,8 @@ public class Mid {
         private Sample sample2;
 
         public FH() {
+            this.sample1 = new Sample();
+            this.sample2 = new Sample();
         }
 
         public FH(Date time, Integer height, Sample sample1, Sample sample2) {
