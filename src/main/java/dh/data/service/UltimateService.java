@@ -31,7 +31,6 @@ public class UltimateService {
         for (Integer flightId : flightIdSet) {
             Ultimate ultimate = new Ultimate();
             ultimate.setFlightId(flightId);
-            ultimateList.add(ultimate);
 
             for (int j = 1; j < outcomeList.size(); j++) {
                 Outcome outcome = outcomeList.get(j);
@@ -63,7 +62,12 @@ public class UltimateService {
                 }
             }
             // 设置持续时间
-            ultimate.setDurationTime(new Date(ultimate.getFirst1Down0Time().getTime() - ultimate.getLast1Down500Time().getTime()));
+            if (ultimate.getFirst1Down0Time() != null && ultimate.getLast1Down500Time() != null) {
+                ultimate.setDurationTime(new Date(ultimate.getFirst1Down0Time().getTime() - ultimate.getLast1Down500Time().getTime()));
+            } else {
+                LOG.warn("[航班{}，数据不全]", flightId);
+                continue;
+            }
             // 三个高度的最大下降率
             int wxdi = 0, qnhi = 0, heighti = 0;
             int wxdDownRate = Math.abs(midList.get(0).getWxdFh().getSample2().getDownRate())
@@ -115,8 +119,8 @@ public class UltimateService {
                         }
                     }
                 }
-                ultimateList.add(ultimate);
             }
+            ultimateList.add(ultimate);
         }
         LOG.info("[保存]");
         UltimateDao.saveList(ultimateList);

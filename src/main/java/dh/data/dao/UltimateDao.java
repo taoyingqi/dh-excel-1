@@ -234,30 +234,58 @@ public class UltimateDao {
     private static void write(Ultimate ultimate) {
         row = sheet.createRow(sheet.getLastRowNum() >= headerLines ? (sheet.getLastRowNum() + 1) : headerLines);
         row.createCell(0).setCellValue(ultimate.getFlightId());
-        /*row.createCell(1).setCellValue(ultimate.getDown500n());
+        if (ultimate.getDown500n() != null) {
+            row.createCell(1).setCellValue(ultimate.getDown500n());
+        } else {
+            row.createCell(1);
+        }
         row.createCell(2).setCellValue(TimeUtil.formatDate(ultimate.getLast1Down500Time(), TIME_MILLIS_TYPE));
-        row.createCell(3).setCellValue(ultimate.getDown0n());
+        if (ultimate.getDown0n() != null) {
+            row.createCell(3).setCellValue(ultimate.getDown0n());
+        } else {
+            row.createCell(3);
+        }
         row.createCell(4).setCellValue(TimeUtil.formatDate(ultimate.getFirst1Down0Time(), TIME_MILLIS_TYPE));
         row.createCell(5).setCellValue(TimeUtil.formatDate(ultimate.getDurationTime(), TIME_MILLIS_TYPE));
         // 无线电高度最大下降率
         row.createCell(6).setCellValue(TimeUtil.formatDate(ultimate.getWxdMdc().getStartTime(), TIME_MILLIS_TYPE));
         row.createCell(7).setCellValue(TimeUtil.formatDate(ultimate.getWxdMdc().getEndTime(), TIME_MILLIS_TYPE));
-        row.createCell(8).setCellValue(ultimate.getWxdMdc().getDownRate());
+        if (ultimate.getWxdMdc().getDownRate() != null) {
+            row.createCell(8).setCellValue(ultimate.getWxdMdc().getDownRate());
+        } else {
+            row.createCell(8);
+        }
         // QNH高度最大下降率
         row.createCell(9).setCellValue(TimeUtil.formatDate(ultimate.getQnhMdc().getStartTime(), TIME_MILLIS_TYPE));
         row.createCell(10).setCellValue(TimeUtil.formatDate(ultimate.getQnhMdc().getEndTime(), TIME_MILLIS_TYPE));
-        row.createCell(11).setCellValue(ultimate.getQnhMdc().getDownRate());
+        if (ultimate.getQnhMdc().getDownRate() != null) {
+            row.createCell(11).setCellValue(ultimate.getQnhMdc().getDownRate());
+        } else {
+            row.createCell(11);
+        }
         // Height高度最大下降率
         row.createCell(12).setCellValue(TimeUtil.formatDate(ultimate.getHeightMdc().getStartTime(), TIME_MILLIS_TYPE));
         row.createCell(13).setCellValue(TimeUtil.formatDate(ultimate.getHeightMdc().getEndTime(), TIME_MILLIS_TYPE));
-        row.createCell(14).setCellValue(ultimate.getHeightMdc().getDownRate());
+        if (ultimate.getHeightMdc().getDownRate() != null) {
+            row.createCell(14).setCellValue(ultimate.getHeightMdc().getDownRate());
+        } else {
+            row.createCell(14);
+        }
         // 下降率超过500英尺每分钟
-        row.createCell(15).setCellValue(ultimate.getDownRateGt500n());
+        if (ultimate.getDownRateGt500n() != null) {
+            row.createCell(15).setCellValue(ultimate.getDownRateGt500n());
+        } else {
+            row.createCell(15);
+        }
         row.createCell(16).setCellValue(TimeUtil.formatDate(ultimate.getDownRateGt500Ld().getStartTime(), TIME_MILLIS_TYPE));
         row.createCell(17).setCellValue(TimeUtil.formatDate(ultimate.getDownRateGt500Ld().getEndTime(), TIME_MILLIS_TYPE));
-        row.createCell(18).setCellValue(ultimate.getDownRateGt500Ld().getDurationSec());
-*/
-//        for (int i = 0; i < 18; i++) {
+        if (ultimate.getDownRateGt500Ld().getDurationSec() != null) {
+            row.createCell(18).setCellValue(ultimate.getDownRateGt500Ld().getDurationSec());
+        } else {
+            row.createCell(18);
+        }
+
+        //        for (int i = 0; i < 18; i++) {
 //            sheet.autoSizeColumn((short)i); //自动调整第一列宽度
 //        }
     }
