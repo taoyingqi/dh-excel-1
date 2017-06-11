@@ -295,10 +295,10 @@ public class MidDao {
                         (int) row.getCell(24).getNumericCellValue(),
                         null
                 )));
-        mid.setWxdCond(row.getCell(25).getBooleanCellValue());
-        mid.setQnhCond(row.getCell(26).getBooleanCellValue());
-        mid.setHeightCond(row.getCell(27).getBooleanCellValue());
-        mid.setMultiCond(row.getCell(28).getBooleanCellValue());
+        mid.setWxdCond(NumericUtil.parseBoolean(row.getCell(25).getStringCellValue()));
+        mid.setQnhCond(NumericUtil.parseBoolean(row.getCell(26).getStringCellValue()));
+        mid.setHeightCond(NumericUtil.parseBoolean(row.getCell(27).getStringCellValue()));
+        mid.setMultiCond(NumericUtil.parseBoolean(row.getCell(28).getStringCellValue()));
         mid.setDurationSec((int) row.getCell(29).getNumericCellValue());
         return mid;
     }
@@ -313,41 +313,57 @@ public class MidDao {
         row.createCell(4).setCellValue(formatDate(mid.getWxdFh().getSample1().getEndTime(), TIME_MILLIS_TYPE));
         if (mid.getWxdFh().getSample1().getDownRate() != null) {
             row.createCell(5).setCellValue(NumericUtil.toDecimal(MidUtil.devWxdFactor(mid.getWxdFh().getSample1().getDownRate()), 0));
+        } else {
+            row.createCell(5);
         }
         row.createCell(6).setCellValue(formatDate(mid.getWxdFh().getSample2().getStartTime(), TIME_MILLIS_TYPE));
         row.createCell(7).setCellValue(formatDate(mid.getWxdFh().getSample2().getEndTime(), TIME_MILLIS_TYPE));
         if (mid.getWxdFh().getSample2().getDownRate() != null) {
             row.createCell(8).setCellValue(NumericUtil.toDecimal(MidUtil.devWxdFactor(mid.getWxdFh().getSample2().getDownRate()), 0));
+        } else {
+            row.createCell(8);
         }
         // QNH高度口径
         row.createCell(9).setCellValue(formatDate(mid.getQnhFh().getTime(), TIME_MILLIS_TYPE));
         if (mid.getQnhFh().getHeight() != null) {
             row.createCell(10).setCellValue(mid.getQnhFh().getHeight());
+        } else {
+            row.createCell(10);
         }
         row.createCell(11).setCellValue(formatDate(mid.getQnhFh().getSample1().getStartTime(), TIME_MILLIS_TYPE));
         row.createCell(12).setCellValue(formatDate(mid.getQnhFh().getSample1().getEndTime(), TIME_MILLIS_TYPE));
         if (mid.getQnhFh().getSample1().getDownRate() != null) {
             row.createCell(13).setCellValue(mid.getQnhFh().getSample1().getDownRate());
+        } else {
+            row.createCell(13);
         }
         row.createCell(14).setCellValue(formatDate(mid.getQnhFh().getSample2().getStartTime(), TIME_MILLIS_TYPE));
         row.createCell(15).setCellValue(formatDate(mid.getQnhFh().getSample2().getEndTime(), TIME_MILLIS_TYPE));
         if (mid.getQnhFh().getSample2().getDownRate() != null) {
             row.createCell(16).setCellValue(mid.getQnhFh().getSample2().getDownRate());
+        } else {
+            row.createCell(16);
         }
         // Height高度口径
         row.createCell(17).setCellValue(formatDate(mid.getHeightFh().getTime(), TIME_MILLIS_TYPE));
         if (mid.getHeightFh().getHeight() != null) {
             row.createCell(18).setCellValue(mid.getHeightFh().getHeight());
+        } else {
+            row.createCell(18);
         }
         row.createCell(19).setCellValue(formatDate(mid.getHeightFh().getSample1().getStartTime(), TIME_MILLIS_TYPE));
         row.createCell(20).setCellValue(formatDate(mid.getHeightFh().getSample1().getEndTime(), TIME_MILLIS_TYPE));
         if (mid.getHeightFh().getSample1().getDownRate() != null) {
             row.createCell(21).setCellValue(mid.getHeightFh().getSample1().getDownRate());
+        } else {
+            row.createCell(21);
         }
         row.createCell(22).setCellValue(formatDate(mid.getHeightFh().getSample2().getStartTime(), TIME_MILLIS_TYPE));
         row.createCell(23).setCellValue(formatDate(mid.getHeightFh().getSample2().getEndTime(), TIME_MILLIS_TYPE));
         if (mid.getHeightFh().getSample2().getDownRate() != null) {
             row.createCell(24).setCellValue(mid.getHeightFh().getSample2().getDownRate());
+        } else {
+            row.createCell(24);
         }
         row.createCell(25).setCellValue(toStr(mid.getWxdCond()));
         row.createCell(26).setCellValue(toStr(mid.getQnhCond()));
@@ -355,6 +371,8 @@ public class MidDao {
         row.createCell(28).setCellValue(toStr(mid.getMultiCond()));
         if (mid.getDurationSec() != null) {
             row.createCell(29).setCellValue(mid.getDurationSec());
+        } else {
+            row.createCell(29);
         }
     }
 

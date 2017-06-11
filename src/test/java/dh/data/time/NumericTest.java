@@ -36,4 +36,9 @@ public class NumericTest {
         System.out.println(1f);
     }
 
+    @Test
+    public void testParseInt() {
+        System.out.println((int)Double.parseDouble("3348.0"));
+    }
+
 }

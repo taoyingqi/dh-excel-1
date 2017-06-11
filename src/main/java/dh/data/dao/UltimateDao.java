@@ -234,7 +234,7 @@ public class UltimateDao {
     private static void write(Ultimate ultimate) {
         row = sheet.createRow(sheet.getLastRowNum() >= headerLines ? (sheet.getLastRowNum() + 1) : headerLines);
         row.createCell(0).setCellValue(ultimate.getFlightId());
-        row.createCell(1).setCellValue(ultimate.getDown500n());
+        /*row.createCell(1).setCellValue(ultimate.getDown500n());
         row.createCell(2).setCellValue(TimeUtil.formatDate(ultimate.getLast1Down500Time(), TIME_MILLIS_TYPE));
         row.createCell(3).setCellValue(ultimate.getDown0n());
         row.createCell(4).setCellValue(TimeUtil.formatDate(ultimate.getFirst1Down0Time(), TIME_MILLIS_TYPE));
@@ -256,7 +256,7 @@ public class UltimateDao {
         row.createCell(16).setCellValue(TimeUtil.formatDate(ultimate.getDownRateGt500Ld().getStartTime(), TIME_MILLIS_TYPE));
         row.createCell(17).setCellValue(TimeUtil.formatDate(ultimate.getDownRateGt500Ld().getEndTime(), TIME_MILLIS_TYPE));
         row.createCell(18).setCellValue(ultimate.getDownRateGt500Ld().getDurationSec());
-
+*/
 //        for (int i = 0; i < 18; i++) {
 //            sheet.autoSizeColumn((short)i); //自动调整第一列宽度
 //        }

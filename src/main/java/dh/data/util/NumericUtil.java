@@ -21,15 +21,18 @@ public class NumericUtil {
     }
 
     public static Float parseFloat(String s) {
-        return s == null ? null : Float.parseFloat(s);
+        return s == null || s.trim().equals("") ? null : Float.parseFloat(s);
     }
 
     public static Integer parseInt(String s) {
-        return s == null ? null : Integer.parseInt(s);
+        return s == null || s.trim().equals("") ? null : (int)Double.parseDouble(s);
+    }
+
+    public static Boolean parseBoolean(String s) {
+        return s == null || s.trim().equals("") ? null : Boolean.parseBoolean(s);
     }
 
     /**
-     *
      * @param f
      * @param n 保留位数
      * @return
