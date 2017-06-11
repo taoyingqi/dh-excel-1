@@ -1,7 +1,6 @@
 package dh.data.dao;
 
 import dh.data.config.IConst;
-import dh.data.dto.eo.MidEo;
 import dh.data.model.Mid;
 import dh.data.model.Sample;
 import dh.data.util.MidUtil;
@@ -52,14 +51,12 @@ public class MidDao {
     }
 
     public static void save(Mid mid) {
-//        write2(new MidEo(mid));
         write(mid);
         output();
     }
 
     public static void saveList(List<Mid> list) {
         for (Mid mid : list) {
-//            write2(new MidEo(mid));
             write(mid);
         }
         output();
@@ -375,46 +372,6 @@ public class MidDao {
             row.createCell(29);
         }
     }
-
-    @Deprecated
-    private static void write2(MidEo midEo) {
-        row = sheet.createRow(sheet.getLastRowNum() + 1);
-        row.createCell(0).setCellValue(midEo.getFlightId());
-        // 无线电高度口径
-        row.createCell(1).setCellValue(midEo.getWxdFh().getTime());
-        row.createCell(2).setCellValue(midEo.getWxdFh().getHeight());
-        row.createCell(3).setCellValue(midEo.getWxdFh().getSample1().getStartTime());
-        row.createCell(4).setCellValue(midEo.getWxdFh().getSample1().getEndTime());
-        row.createCell(5).setCellValue(midEo.getWxdFh().getSample1().getDownRate());
-        row.createCell(6).setCellValue(midEo.getWxdFh().getSample2().getStartTime());
-        row.createCell(7).setCellValue(midEo.getWxdFh().getSample2().getEndTime());
-        row.createCell(8).setCellValue(midEo.getWxdFh().getSample2().getDownRate());
-        // QNH高度口径
-        row.createCell(9).setCellValue(midEo.getQnhFh().getTime());
-        row.createCell(10).setCellValue(midEo.getQnhFh().getHeight());
-        row.createCell(11).setCellValue(midEo.getQnhFh().getSample1().getStartTime());
-        row.createCell(12).setCellValue(midEo.getQnhFh().getSample1().getEndTime());
-        row.createCell(13).setCellValue(midEo.getQnhFh().getSample1().getDownRate());
-        row.createCell(14).setCellValue(midEo.getQnhFh().getSample2().getStartTime());
-        row.createCell(15).setCellValue(midEo.getQnhFh().getSample2().getEndTime());
-        row.createCell(16).setCellValue(midEo.getQnhFh().getSample2().getDownRate());
-        // Height高度口径
-        row.createCell(17).setCellValue(midEo.getHeightFh().getTime());
-        row.createCell(18).setCellValue(midEo.getHeightFh().getHeight());
-        row.createCell(19).setCellValue(midEo.getHeightFh().getSample1().getStartTime());
-        row.createCell(20).setCellValue(midEo.getHeightFh().getSample1().getEndTime());
-        row.createCell(21).setCellValue(midEo.getHeightFh().getSample1().getDownRate());
-        row.createCell(22).setCellValue(midEo.getHeightFh().getSample2().getStartTime());
-        row.createCell(23).setCellValue(midEo.getHeightFh().getSample2().getEndTime());
-        row.createCell(24).setCellValue(midEo.getHeightFh().getSample2().getDownRate());
-
-        row.createCell(25).setCellValue(midEo.getWxdCond());
-        row.createCell(26).setCellValue(midEo.getQnhCond());
-        row.createCell(27).setCellValue(midEo.getHeightCond());
-        row.createCell(28).setCellValue(midEo.getMultiCond());
-        row.createCell(29).setCellValue(midEo.getDurationSec());
-    }
-
 
 
 }

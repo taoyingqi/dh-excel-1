@@ -111,10 +111,20 @@ public class UltimateService {
                         downRateGt500LdSample.setDurationSec(mid.getDurationSec());
                         //
                         if (ultimate.getDownRateGt500Ld() == null) {
-                            ultimate.setDownRateGt500Ld(downRateGt500LdSample);
+                            ultimate.setDownRateGt500Ld(new Sample(
+                                    downRateGt500LdSample.getStartTime(),
+                                    downRateGt500LdSample.getEndTime(),
+                                    null,
+                                    downRateGt500LdSample.getDurationSec()
+                            ));
                         } else {
                             if (ultimate.getDownRateGt500Ld().getDurationSec() < downRateGt500LdSample.getDurationSec()) {
-                                ultimate.setDownRateGt500Ld(downRateGt500LdSample);
+                                ultimate.setDownRateGt500Ld(new Sample(
+                                        downRateGt500LdSample.getStartTime(),
+                                        downRateGt500LdSample.getEndTime(),
+                                        null,
+                                        downRateGt500LdSample.getDurationSec()
+                                ));
                             }
                         }
                     }
