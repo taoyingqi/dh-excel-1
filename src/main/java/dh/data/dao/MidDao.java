@@ -280,7 +280,7 @@ public class MidDao {
                         null
                 )));
         // Height高度口径
-        mid.setQnhFh(new Mid.FH(
+        mid.setHeightFh(new Mid.FH(
                 TimeUtil.parseDate(row.getCell(17).getStringCellValue(), TIME_MILLIS_TYPE),
                 (int) row.getCell(18).getNumericCellValue(),
                 new Sample(
