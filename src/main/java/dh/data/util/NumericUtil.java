@@ -1,5 +1,6 @@
 package dh.data.util;
 
+import java.math.BigDecimal;
 import java.text.DecimalFormat;
 
 /**
@@ -33,9 +34,9 @@ public class NumericUtil {
      * @param n 保留位数
      * @return
      */
-    public static String toDecimal(Float f, int n) {
+    public static String toDecimal2(Float f, int n) {
         if (f == null) {
-            return null;
+            return "";
         }
         String str = "0";
         if (n > 0) {
@@ -46,5 +47,12 @@ public class NumericUtil {
         }
         DecimalFormat format = new DecimalFormat(str);
         return format.format(f);
+//        BigDecimal bd = new BigDecimal(f);
+//        return bd.setScale(n, BigDecimal.ROUND_HALF_UP).floatValue();
+    }
+
+    public static float toDecimal(float f, int n) {
+        BigDecimal bd = new BigDecimal(f);
+        return bd.setScale(n, BigDecimal.ROUND_HALF_UP).floatValue();
     }
 }

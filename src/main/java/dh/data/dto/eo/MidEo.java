@@ -178,11 +178,11 @@ public class MidEo extends BaseEo<Mid> {
                 toStr(MidUtil.devWxdFactor(mid.getWxdFh().getHeight())),
                 new SampleEo(formatDate(mid.getWxdFh().getSample1().getStartTime(), TIME_MILLIS_TYPE),
                         formatDate(mid.getWxdFh().getSample1().getEndTime(), TIME_MILLIS_TYPE),
-                        NumericUtil.toDecimal(MidUtil.devWxdFactor(mid.getWxdFh().getSample1().getDownRate()),0),
+                        NumericUtil.toDecimal2(MidUtil.devWxdFactor(mid.getWxdFh().getSample1().getDownRate()),0),
                         null),
                 new SampleEo(formatDate(mid.getWxdFh().getSample2().getStartTime(), TIME_MILLIS_TYPE),
                         formatDate(mid.getWxdFh().getSample2().getEndTime(), TIME_MILLIS_TYPE),
-                        NumericUtil.toDecimal(MidUtil.devWxdFactor(mid.getWxdFh().getSample2().getDownRate()), 0),
+                        NumericUtil.toDecimal2(MidUtil.devWxdFactor(mid.getWxdFh().getSample2().getDownRate()), 0),
                         null)));
         // QNH高度口径
         this.setQnhFh(new FH(formatDate(mid.getQnhFh().getTime(), TIME_MILLIS_TYPE),

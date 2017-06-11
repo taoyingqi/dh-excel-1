@@ -11,6 +11,8 @@ import org.apache.poi.xssf.usermodel.XSSFCellStyle;
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -22,6 +24,7 @@ import static dh.data.util.TimeUtil.TIME_MILLIS_TYPE;
  * Created by MT-T450 on 2017/6/8.
  */
 public class UltimateDao {
+    private final static Logger LOG = LoggerFactory.getLogger(UltimateDao.class);
 
     private final static String fileName = "/dist/181个航班最终表 0411.xlsx";
     private final static String sheetName = "181个航班最终表";
@@ -72,6 +75,21 @@ public class UltimateDao {
             list.add(parse(sheet.getRow(i)));
         }
         return list;
+    }
+
+    public static void delete() {
+        File file = new File(IConst.PATH + fileName);
+        if (file.exists()) {
+            LOG.info("[删除文件->{}]", IConst.PATH + fileName);
+            file.delete();
+        }
+    }
+
+    public static void clear() {
+        LOG.info("[清除旧数据]");
+        for (int i = headerLines; i <= sheet.getLastRowNum(); i++) {
+            sheet.removeRow(sheet.getRow(i));
+        }
     }
 
     private static void create() {

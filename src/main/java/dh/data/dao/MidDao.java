@@ -4,6 +4,8 @@ import dh.data.config.IConst;
 import dh.data.dto.eo.MidEo;
 import dh.data.model.Mid;
 import dh.data.model.Sample;
+import dh.data.util.MidUtil;
+import dh.data.util.NumericUtil;
 import dh.data.util.TimeUtil;
 import org.apache.poi.poifs.filesystem.POIFSFileSystem;
 import org.apache.poi.ss.usermodel.Row;
@@ -18,7 +20,9 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
+import static dh.data.util.NumericUtil.toStr;
 import static dh.data.util.TimeUtil.TIME_MILLIS_TYPE;
+import static dh.data.util.TimeUtil.formatDate;
 
 /**
  * Created by MT-T450 on 2017/6/7.
@@ -48,13 +52,15 @@ public class MidDao {
     }
 
     public static void save(Mid mid) {
-        write(new MidEo(mid));
+//        write2(new MidEo(mid));
+        write(mid);
         output();
     }
 
     public static void saveList(List<Mid> list) {
         for (Mid mid : list) {
-            write(new MidEo(mid));
+//            write2(new MidEo(mid));
+            write(mid);
         }
         output();
     }
@@ -297,7 +303,63 @@ public class MidDao {
         return mid;
     }
 
-    private static void write(MidEo midEo) {
+    private static void write(Mid mid) {
+        row = sheet.createRow(sheet.getLastRowNum() + 1);
+        row.createCell(0).setCellValue(mid.getFlightId());
+        // 无线电高度口径
+        row.createCell(1).setCellValue(formatDate(mid.getWxdFh().getTime(), TIME_MILLIS_TYPE));
+        row.createCell(2).setCellValue(MidUtil.devWxdFactor(mid.getWxdFh().getHeight()));
+        row.createCell(3).setCellValue(formatDate(mid.getWxdFh().getSample1().getStartTime(), TIME_MILLIS_TYPE));
+        row.createCell(4).setCellValue(formatDate(mid.getWxdFh().getSample1().getEndTime(), TIME_MILLIS_TYPE));
+        if (mid.getWxdFh().getSample1().getDownRate() != null) {
+            row.createCell(5).setCellValue(NumericUtil.toDecimal(MidUtil.devWxdFactor(mid.getWxdFh().getSample1().getDownRate()), 0));
+        }
+        row.createCell(6).setCellValue(formatDate(mid.getWxdFh().getSample2().getStartTime(), TIME_MILLIS_TYPE));
+        row.createCell(7).setCellValue(formatDate(mid.getWxdFh().getSample2().getEndTime(), TIME_MILLIS_TYPE));
+        if (mid.getWxdFh().getSample2().getDownRate() != null) {
+            row.createCell(8).setCellValue(NumericUtil.toDecimal(MidUtil.devWxdFactor(mid.getWxdFh().getSample2().getDownRate()), 0));
+        }
+        // QNH高度口径
+        row.createCell(9).setCellValue(formatDate(mid.getQnhFh().getTime(), TIME_MILLIS_TYPE));
+        if (mid.getQnhFh().getHeight() != null) {
+            row.createCell(10).setCellValue(mid.getQnhFh().getHeight());
+        }
+        row.createCell(11).setCellValue(formatDate(mid.getQnhFh().getSample1().getStartTime(), TIME_MILLIS_TYPE));
+        row.createCell(12).setCellValue(formatDate(mid.getQnhFh().getSample1().getEndTime(), TIME_MILLIS_TYPE));
+        if (mid.getQnhFh().getSample1().getDownRate() != null) {
+            row.createCell(13).setCellValue(mid.getQnhFh().getSample1().getDownRate());
+        }
+        row.createCell(14).setCellValue(formatDate(mid.getQnhFh().getSample2().getStartTime(), TIME_MILLIS_TYPE));
+        row.createCell(15).setCellValue(formatDate(mid.getQnhFh().getSample2().getEndTime(), TIME_MILLIS_TYPE));
+        if (mid.getQnhFh().getSample2().getDownRate() != null) {
+            row.createCell(16).setCellValue(mid.getQnhFh().getSample2().getDownRate());
+        }
+        // Height高度口径
+        row.createCell(17).setCellValue(formatDate(mid.getHeightFh().getTime(), TIME_MILLIS_TYPE));
+        if (mid.getHeightFh().getHeight() != null) {
+            row.createCell(18).setCellValue(mid.getHeightFh().getHeight());
+        }
+        row.createCell(19).setCellValue(formatDate(mid.getHeightFh().getSample1().getStartTime(), TIME_MILLIS_TYPE));
+        row.createCell(20).setCellValue(formatDate(mid.getHeightFh().getSample1().getEndTime(), TIME_MILLIS_TYPE));
+        if (mid.getHeightFh().getSample1().getDownRate() != null) {
+            row.createCell(21).setCellValue(mid.getHeightFh().getSample1().getDownRate());
+        }
+        row.createCell(22).setCellValue(formatDate(mid.getHeightFh().getSample2().getStartTime(), TIME_MILLIS_TYPE));
+        row.createCell(23).setCellValue(formatDate(mid.getHeightFh().getSample2().getEndTime(), TIME_MILLIS_TYPE));
+        if (mid.getHeightFh().getSample2().getDownRate() != null) {
+            row.createCell(24).setCellValue(mid.getHeightFh().getSample2().getDownRate());
+        }
+        row.createCell(25).setCellValue(toStr(mid.getWxdCond()));
+        row.createCell(26).setCellValue(toStr(mid.getQnhCond()));
+        row.createCell(27).setCellValue(toStr(mid.getHeightCond()));
+        row.createCell(28).setCellValue(toStr(mid.getMultiCond()));
+        if (mid.getDurationSec() != null) {
+            row.createCell(29).setCellValue(mid.getDurationSec());
+        }
+    }
+
+    @Deprecated
+    private static void write2(MidEo midEo) {
         row = sheet.createRow(sheet.getLastRowNum() + 1);
         row.createCell(0).setCellValue(midEo.getFlightId());
         // 无线电高度口径
@@ -334,5 +396,7 @@ public class MidDao {
         row.createCell(28).setCellValue(midEo.getMultiCond());
         row.createCell(29).setCellValue(midEo.getDurationSec());
     }
+
+
 
 }

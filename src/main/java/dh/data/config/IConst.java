@@ -6,4 +6,5 @@ package dh.data.config;
 public interface IConst {
     String PATH = "g:/youzidata/dh-excel";
     Integer WXD_FACTOR = 10;
+    Integer RALTC_FACTOR = 10;
 }

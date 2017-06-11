@@ -3,10 +3,12 @@ package dh.data.handle;
 import dh.data.dao.UltimateDao;
 import dh.data.model.Sample;
 import dh.data.model.Ultimate;
+import dh.data.service.UltimateService;
 import dh.data.util.TimeUtil;
 import org.apache.poi.ss.usermodel.DateUtil;
 import org.junit.Test;
 
+import java.io.IOException;
 import java.util.Date;
 import java.util.List;
 
@@ -50,6 +52,12 @@ public class UltimateHandler {
                 32000
         ));
         UltimateDao.save(ultimate);
+    }
+
+    @Test
+    public void calc() throws IOException {
+        UltimateDao.clear();
+        UltimateService.calc();
     }
 
     @Test
