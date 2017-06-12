@@ -10,6 +10,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
+import java.util.TimeZone;
 
 /**
  * Created by MT-T450 on 2017/6/7.
@@ -20,7 +21,7 @@ public class TimeUtil {
     public static final String DATE_TIME_MILLIS_TYPE = "yyyy:MM:dd HH:mm:ss:SSS";
     public static final String TIME_TYPE = "HH:mm:ss";
     public static final String TIME_MILLIS_TYPE = "HH:mm:ss:SSS";
-
+    public static final String Timezone = "GMT+8";
 
     public static String formatDate(Long date) {
         return formatDate(date, DATE_TYPE);
@@ -41,7 +42,7 @@ public class TimeUtil {
         if (null == date) {
             return "";
         }
-        return DateFormatUtils.format(date, format);
+        return DateFormatUtils.format(date, format, TimeZone.getTimeZone(Timezone));
     }
 
     public static String formatDate(Timestamp date) {

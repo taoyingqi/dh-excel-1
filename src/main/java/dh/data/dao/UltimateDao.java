@@ -40,7 +40,7 @@ public class UltimateDao {
 //            fs = new POIFSFileSystem(is);
             workbook = new XSSFWorkbook(is);
         } catch (FileNotFoundException e) {
-            System.out.println("创建新文件：" + IConst.PATH + fileName);
+            LOG.info("[创建新文件：{}]", IConst.PATH + fileName);
             create();
         } catch (IOException e) {
             e.printStackTrace();

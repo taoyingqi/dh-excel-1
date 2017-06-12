@@ -32,11 +32,18 @@ public class UltimateService {
             Ultimate ultimate = new Ultimate();
             ultimate.setFlightId(flightId);
 
-            for (int j = 1; j < outcomeList.size(); j++) {
+            for (int j = 1, fj = 0; j < outcomeList.size(); j++) {
                 Outcome outcome = outcomeList.get(j);
+                if (fj > 0) {
+                    if (outcome.getFlightId().equals(outcomeList.get(j - 1).getFlightId())) {
+                        fj++;
+                    } else {
+                        fj = 0;
+                    }
+                }
                 if (outcome.getFlightId().equals(flightId)) {
                     if (outcome.getHeight() <= 500
-                            && outcomeList.get(j - 1).getHeight() >= 500) {
+                            && outcomeList.get(j - 1).getHeight() > 500) {
                         // 设置下穿500英尺次数
                         if (ultimate.getDown500n() == null) {
                             ultimate.setDown500n(1);
@@ -44,10 +51,10 @@ public class UltimateService {
                             ultimate.setDown500n(ultimate.getDown500n() + 1);
                         }
                         // 设置最后一次下穿500英尺时刻
-                        ultimate.setLast1Down500Time(outcome.getTime());
+                        ultimate.setLast1Down500Time(new Date(outcome.getTime().getTime() + fj % 4 * 250));
                     }
                     if (outcome.getHeight() <= 0
-                            && outcomeList.get(j - 1).getHeight() >= 0) {
+                            && outcomeList.get(j - 1).getHeight() > 0) {
                         // 设置下穿0英尺次数
                         if (ultimate.getDown0n() == null) {
                             ultimate.setDown0n(1);
@@ -56,7 +63,7 @@ public class UltimateService {
                         }
                         // 设置首次下穿0英尺时刻
                         if (ultimate.getFirst1Down0Time() == null) {
-                            ultimate.setFirst1Down0Time(outcome.getTime());
+                            ultimate.setFirst1Down0Time(new Date(outcome.getTime().getTime() +  + fj % 4 * 250));
                         }
                     }
                 }
@@ -98,10 +105,10 @@ public class UltimateService {
             for (int j = 0; j < midList.size(); j++) {
                 Mid mid = midList.get(j);
                 if (mid.getFlightId().equals(flightId)) {
-                    if (mid.getDurationSec().equals(0)) {
+                    if (mid.getDurationSec().equals(1)) {
                         downRateGt500LdSample.setStartTime(mid.getHeightFh().getTime());
                     }
-                    if (mid.getDurationSec() > 0) {
+                    if (mid.getDurationSec() > 1) {
                         if (ultimate.getDownRateGt500n() == null) {
                             ultimate.setDownRateGt500n(1);
                         } else {
@@ -113,7 +120,7 @@ public class UltimateService {
                         if (ultimate.getDownRateGt500Ld() == null) {
                             ultimate.setDownRateGt500Ld(new Sample(
                                     downRateGt500LdSample.getStartTime(),
-                                    downRateGt500LdSample.getEndTime(),
+                                    new Date(downRateGt500LdSample.getEndTime().getTime() + 250),
                                     null,
                                     downRateGt500LdSample.getDurationSec()
                             ));
@@ -121,7 +128,7 @@ public class UltimateService {
                             if (ultimate.getDownRateGt500Ld().getDurationSec() < downRateGt500LdSample.getDurationSec()) {
                                 ultimate.setDownRateGt500Ld(new Sample(
                                         downRateGt500LdSample.getStartTime(),
-                                        downRateGt500LdSample.getEndTime(),
+                                        new Date(downRateGt500LdSample.getEndTime().getTime() + 250),
                                         null,
                                         downRateGt500LdSample.getDurationSec()
                                 ));

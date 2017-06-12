@@ -115,10 +115,10 @@ public class MidService {
 
             if ((fi - 3) % 4 == 0) {
                 //秒内四个时刻的平均下降率超过500
-                if (wxdFH.getSample2().getDownRate() != null && wxdFH.getSample2().getDownRate() >= 500
-                        && midList.get(i - 1).getWxdFh().getSample2().getDownRate() != null && midList.get(i - 1).getWxdFh().getSample2().getDownRate() >= 500
-                        && midList.get(i - 2).getWxdFh().getSample2().getDownRate() != null && midList.get(i - 2).getWxdFh().getSample2().getDownRate() >= 500
-                        && midList.get(i - 3).getWxdFh().getSample2().getDownRate() != null && midList.get(i - 3).getWxdFh().getSample2().getDownRate() >= 500
+                if (wxdFH.getSample2().getDownRate() != null && Math.abs(wxdFH.getSample2().getDownRate()) >= 500
+                        && midList.get(i - 1).getWxdFh().getSample2().getDownRate() != null && Math.abs(midList.get(i - 1).getWxdFh().getSample2().getDownRate()) >= 500
+                        && midList.get(i - 2).getWxdFh().getSample2().getDownRate() != null && Math.abs(midList.get(i - 2).getWxdFh().getSample2().getDownRate()) >= 500
+                        && midList.get(i - 3).getWxdFh().getSample2().getDownRate() != null && Math.abs(midList.get(i - 3).getWxdFh().getSample2().getDownRate()) >= 500
                         ) {
                     midList.get(i - 3).setWxdCond(true);
                 } else {
@@ -157,7 +157,7 @@ public class MidService {
                 }
                 if (start != 0 && end != 0 && start < end) {
                     // 计算持续时间
-                    midList.get(start).setDurationSec(0);
+                    midList.get(start).setDurationSec(1);
                     midList.get(end - 1).setDurationSec((int) (midList.get(end).getHeightFh().getTime().getTime() - midList.get(start).getHeightFh().getTime().getTime()));
                     start = 0; end = 0;
                 }
