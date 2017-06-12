@@ -26,7 +26,7 @@ import static dh.data.util.TimeUtil.TIME_MILLIS_TYPE;
 public class UltimateDao {
     private final static Logger LOG = LoggerFactory.getLogger(UltimateDao.class);
 
-    private final static String fileName = "/dist/181个航班最终表 0411.xlsx";
+    private final static String fileName = "/181个航班最终表 0411.xlsx";
     private final static String sheetName = "181个航班最终表";
     private final static Integer headerLines = 3;
     private static POIFSFileSystem fs;

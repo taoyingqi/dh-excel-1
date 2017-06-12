@@ -16,7 +16,7 @@ import java.util.List;
  * Created by MT-T450 on 2017/6/7.
  */
 public class OriginDao {
-    private final static String fileName = "/src/加工过源数据完整.csv";
+    private final static String fileName = "/加工过源数据完整.csv";
     private final static String sheetName = "加工过源数据完整";
 
     private static CsvReader csvReader = null;

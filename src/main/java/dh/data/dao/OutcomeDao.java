@@ -16,7 +16,7 @@ import java.util.List;
  * Created by lonel on 2017/6/10.
  */
 public class OutcomeDao {
-    private final static String fileName = "/src/结果数据（只有上限）.csv";
+    private final static String fileName = "/结果数据（只有上限）.csv";
     private final static String sheetName = "结果数据（只有上限）";
 
     private static CsvReader csvReader = null;

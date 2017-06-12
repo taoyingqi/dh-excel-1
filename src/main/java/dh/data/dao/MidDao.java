@@ -28,7 +28,7 @@ import static dh.data.util.TimeUtil.formatDate;
  */
 public class MidDao {
     private final static Logger LOG = LoggerFactory.getLogger(MidDao.class);
-    private final static String fileName = "/dist/181个航班中间表 0411.xlsx";
+    private final static String fileName = "/181个航班中间表 0411.xlsx";
     private final static String sheetName = "181个航班最终表";
     private final static Integer headerLines = 3;
     private static POIFSFileSystem fs;
