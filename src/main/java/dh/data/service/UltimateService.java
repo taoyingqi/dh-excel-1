@@ -1,5 +1,6 @@
 package dh.data.service;
 
+import dh.data.config.IConst;
 import dh.data.dao.MidDao;
 import dh.data.dao.OriginDao;
 import dh.data.dao.OutcomeDao;
@@ -44,8 +45,8 @@ public class UltimateService {
                     }
                 }
                 if (outcome.getFlightId().equals(flightId)) {
-                    if (outcome.getHeight() <= 500
-                            && outcomeList.get(j - 1).getHeight() > 500) {
+                    if (outcome.getRaltc() < 500 * IConst.RALTC_FACTOR
+                            && outcomeList.get(j - 1).getRaltc() >= 500 * IConst.RALTC_FACTOR) {
                         // 设置下穿500英尺次数
                         if (ultimate.getDown500n() == null) {
                             ultimate.setDown500n(1);
@@ -55,8 +56,8 @@ public class UltimateService {
                         // 设置最后一次下穿500英尺时刻
                         ultimate.setLast1Down500Time(new Date(outcome.getTime().getTime() + fj % 4 * 250));
                     }
-                    if (outcome.getHeight() <= 0
-                            && outcomeList.get(j - 1).getHeight() > 0) {
+                    if (outcome.getRaltc() < 0
+                            && outcomeList.get(j - 1).getRaltc() >= 0) {
                         // 设置下穿0英尺次数
                         if (ultimate.getDown0n() == null) {
                             ultimate.setDown0n(1);
