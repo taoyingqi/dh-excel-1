@@ -31,10 +31,12 @@ public class UltimateService {
         for (Integer flightId : flightIdSet) {
             Ultimate ultimate = new Ultimate();
             ultimate.setFlightId(flightId);
-
+            if (flightId.equals(14882)) {
+                System.out.println();
+            }
             for (int j = 1, fj = 0; j < outcomeList.size(); j++) {
                 Outcome outcome = outcomeList.get(j);
-                if (fj > 0) {
+                if (j > 0) {
                     if (outcome.getFlightId().equals(outcomeList.get(j - 1).getFlightId())) {
                         fj++;
                     } else {
@@ -72,7 +74,7 @@ public class UltimateService {
             if (ultimate.getFirst1Down0Time() != null && ultimate.getLast1Down500Time() != null) {
                 ultimate.setDurationTime(new Date(ultimate.getFirst1Down0Time().getTime() - ultimate.getLast1Down500Time().getTime()));
             } else {
-                LOG.warn("[航班{}，数据不全]", flightId);
+                LOG.warn("[航班{}，数据不全。{}]", flightId, ultimate);
                 continue;
             }
             // 三个高度的最大下降率

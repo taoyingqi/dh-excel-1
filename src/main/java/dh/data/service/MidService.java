@@ -115,10 +115,10 @@ public class MidService {
 
             if ((fi - 3) % 4 == 0) {
                 //秒内四个时刻的平均下降率超过500
-                if (wxdFH.getSample2().getDownRate() != null && Math.abs(wxdFH.getSample2().getDownRate()) >= 500
-                        && midList.get(i - 1).getWxdFh().getSample2().getDownRate() != null && Math.abs(midList.get(i - 1).getWxdFh().getSample2().getDownRate()) >= 500
-                        && midList.get(i - 2).getWxdFh().getSample2().getDownRate() != null && Math.abs(midList.get(i - 2).getWxdFh().getSample2().getDownRate()) >= 500
-                        && midList.get(i - 3).getWxdFh().getSample2().getDownRate() != null && Math.abs(midList.get(i - 3).getWxdFh().getSample2().getDownRate()) >= 500
+                if (wxdFH.getSample2().getDownRate() != null && wxdFH.getSample2().getDownRate() < -500 * IConst.WXD_FACTOR
+                        && midList.get(i - 1).getWxdFh().getSample2().getDownRate() != null && midList.get(i - 1).getWxdFh().getSample2().getDownRate() < -500 * IConst.WXD_FACTOR
+                        && midList.get(i - 2).getWxdFh().getSample2().getDownRate() != null && midList.get(i - 2).getWxdFh().getSample2().getDownRate() < -500 * IConst.WXD_FACTOR
+                        && midList.get(i - 3).getWxdFh().getSample2().getDownRate() != null && midList.get(i - 3).getWxdFh().getSample2().getDownRate() < -500 * IConst.WXD_FACTOR
                         ) {
                     midList.get(i - 3).setWxdCond(true);
                 } else {
@@ -131,8 +131,8 @@ public class MidService {
                 midList.get(i - 3).setMultiCond(n > 1); // 至少两个平均下降率均超过500英尺
             }
             if (fi % 4 == 0) {
-                mid.setQnhCond(qnhFh.getSample2().getDownRate() != null && Math.abs(qnhFh.getSample2().getDownRate()) >= 500);
-                mid.setHeightCond(heightFH.getSample2().getDownRate() != null && Math.abs(heightFH.getSample2().getDownRate()) >= 500);
+                mid.setQnhCond(qnhFh.getSample2().getDownRate() != null && qnhFh.getSample2().getDownRate() < -500);
+                mid.setHeightCond(heightFH.getSample2().getDownRate() != null && heightFH.getSample2().getDownRate() < -500);
             }
             midList.add(mid);
         }
@@ -147,18 +147,18 @@ public class MidService {
             }
             if (fi % 4 == 0) {
                 Mid mid = midList.get(i);
-                if (mid.getMultiCond() == null || !mid.getMultiCond()) {
-                    end = i;
-                } else {
+                if (mid.getMultiCond() != null && mid.getMultiCond()) {
                     if (start == 0L) {
                         start = i;
-                    } else {
                     }
+                }
+                if (mid.getMultiCond() != null && !mid.getMultiCond()) {
+                    end = i;
                 }
                 if (start != 0 && end != 0 && start < end) {
                     // 计算持续时间
                     midList.get(start).setDurationSec(1);
-                    midList.get(end - 1).setDurationSec((int) (midList.get(end).getHeightFh().getTime().getTime() - midList.get(start).getHeightFh().getTime().getTime()));
+                    midList.get(end -1).setDurationSec((int) (midList.get(end - 1).getHeightFh().getTime().getTime() - midList.get(start).getHeightFh().getTime().getTime() + 250));
                     start = 0; end = 0;
                 }
             }
