@@ -32,9 +32,8 @@ public class UltimateService {
         for (Integer flightId : flightIdSet) {
             Ultimate ultimate = new Ultimate();
             ultimate.setFlightId(flightId);
-            if (flightId.equals(14882)) {
-                System.out.println();
-            }
+            // 下穿标志
+            boolean gt500Flag = false, gt0Flag = false;
             for (int j = 1, fj = 0; j < outcomeList.size(); j++) {
                 Outcome outcome = outcomeList.get(j);
                 if (j > 0) {
@@ -45,8 +44,10 @@ public class UltimateService {
                     }
                 }
                 if (outcome.getFlightId().equals(flightId)) {
-                    if (outcome.getRaltc() < 500 * IConst.RALTC_FACTOR
-                            && outcomeList.get(j - 1).getRaltc() >= 500 * IConst.RALTC_FACTOR) {
+                    if (outcome.getRaltc() > 500 * IConst.RALTC_FACTOR && !gt500Flag) {
+                        gt500Flag = true;
+                    }
+                    if (outcome.getRaltc() < 500 * IConst.RALTC_FACTOR && gt500Flag) {
                         // 设置下穿500英尺次数
                         if (ultimate.getDown500n() == null) {
                             ultimate.setDown500n(1);
@@ -55,9 +56,13 @@ public class UltimateService {
                         }
                         // 设置最后一次下穿500英尺时刻
                         ultimate.setLast1Down500Time(new Date(outcome.getTime().getTime() + fj % 4 * 250));
+                        // 恢复下穿500英尺-标志
+                        gt500Flag = false;
                     }
-                    if (outcome.getRaltc() < 0
-                            && outcomeList.get(j - 1).getRaltc() > 0) {
+                    if (outcome.getRaltc() > 0 && !gt0Flag) {
+                        gt0Flag = true;
+                    }
+                    if (outcome.getRaltc() < 0 && gt0Flag) {
                         // 设置下穿0英尺次数
                         if (ultimate.getDown0n() == null) {
                             ultimate.setDown0n(1);
@@ -68,6 +73,8 @@ public class UltimateService {
                         if (ultimate.getFirst1Down0Time() == null) {
                             ultimate.setFirst1Down0Time(new Date(outcome.getTime().getTime() +  + fj % 4 * 250));
                         }
+                        // 恢复下穿0英尺-标志
+                        gt0Flag = false;
                     }
                 }
             }
