@@ -57,7 +57,7 @@ public class UltimateService {
                         ultimate.setLast1Down500Time(new Date(outcome.getTime().getTime() + fj % 4 * 250));
                     }
                     if (outcome.getRaltc() < 0
-                            && outcomeList.get(j - 1).getRaltc() >= 0) {
+                            && outcomeList.get(j - 1).getRaltc() > 0) {
                         // 设置下穿0英尺次数
                         if (ultimate.getDown0n() == null) {
                             ultimate.setDown0n(1);
