@@ -17,11 +17,14 @@ public class App {
     private static final Logger LOG = LoggerFactory.getLogger(App.class);
 
     public static void main( String[] args ) throws IOException {
+        long start = System.currentTimeMillis();
         LOG.info("[处理中间表]");
         MidDao.clear();
         MidService.calc();
         LOG.info("[处理最终表]");
         UltimateDao.clear();
         UltimateService.calc();
+        long end = System.currentTimeMillis();
+        System.out.println((end - start) / 1000 + "s");
     }
 }
