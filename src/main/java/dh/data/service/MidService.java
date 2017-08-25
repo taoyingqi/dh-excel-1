@@ -23,6 +23,7 @@ public class MidService {
     public static void calc() throws IOException {
         List<Origin> originList = OriginDao.getAll();
         List<Mid> midList = new ArrayList<>();
+        // fi 同一 flightId 序号
         for (int i = 0, fi = 0; i < originList.size(); i++) {
             Origin origin = originList.get(i);
             Mid mid = new Mid();
@@ -38,6 +39,7 @@ public class MidService {
             Mid.FH wxdFH = new Mid.FH();
             wxdFH.setTime(new Date(origin.getTime().getTime() + fi % 4 * 250));
             wxdFH.setHeight(origin.getWxd());
+            // 1.计算无线电高度每0.5秒下降率：从第3个高度开始，用当下的高度减去后移2个单位的高度，乘以120
             if (fi > 1) {
                 wxdFH.setSample1(new Sample(
                         midList.get(i - 2).getWxdFh().getTime(),
@@ -45,6 +47,7 @@ public class MidService {
                         (origin.getWxd() - originList.get(i - 2).getWxd()) * 120,
                         null));
             }
+            // 2.计算无线电高度的每2秒平均下降率：从第11个高度开始，计算前9个无线电高度下降率的平均值
             if (fi > 9) {
                 Integer sumSample1DownRate = wxdFH.getSample1().getDownRate();
                 for (int j = i - 8; j < i; j++) {
@@ -65,6 +68,7 @@ public class MidService {
             qnhFh.setTime(new Date(origin.getTime().getTime() + fi % 4 * 250));
             if (fi % 4 == 0) {
                 qnhFh.setHeight(origin.getQnh());
+                // 4.计算气压/Height高度每秒下降率：从第2个整秒高度开始，用当下的高度减去后移1个单位的高度，乘以60
                 if (fi > 3) {
                     qnhFh.setSample1(new Sample(
                             midList.get(i - 4).getQnhFh().getTime(),
@@ -73,6 +77,7 @@ public class MidService {
                             null
                     ));
                 }
+                // 5.计算气压/Height高度每2秒平均下降率：从第4个整秒高度开始，计算前3个下降率的平均值
                 if (fi > 11) {
                     qnhFh.setSample2(new Sample(
                             midList.get(i - 8).getQnhFh().getTime(),
@@ -91,6 +96,7 @@ public class MidService {
             heightFH.setTime(new Date(origin.getTime().getTime() + fi % 4 * 250));
             if (fi % 4 == 0) {
                 heightFH.setHeight(origin.getHeight());
+                // 4.计算气压/Height高度每秒下降率：从第2个整秒高度开始，用当下的高度减去后移1个单位的高度，乘以60
                 if (fi > 3) {
                     heightFH.setSample1(new Sample(
                             midList.get(i - 4).getHeightFh().getTime(),
@@ -99,6 +105,7 @@ public class MidService {
                             null
                     ));
                 }
+                // 5.计算气压/Height高度每2秒平均下降率：从第4个整秒高度开始，计算前3个下降率的平均值
                 if (fi > 11) {
                     heightFH.setSample2(new Sample(
                             midList.get(i - 8).getHeightFh().getTime(),
